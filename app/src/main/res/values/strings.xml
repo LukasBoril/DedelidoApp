@@ -17,4 +17,15 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <!-- Strings used for sixth fragment -->
+    <string name="button_continue_f6">Continue</string>
+    <string name="button_exit">Exit</string>
+
+    <!-- Strings used for seventh fragment -->
+    <string name="button_exit_f7">Exit</string>
+
+
+
 </resources>
