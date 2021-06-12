@@ -9,6 +9,9 @@
 
     <!-- Strings used for fourth fragment -->
     <string name="backToMain">End current Game</string>
+    <string name="titelNextPlayer">The next player will be:</string>
+
+
 
     <!-- Strings used for fifth fragment -->
 
