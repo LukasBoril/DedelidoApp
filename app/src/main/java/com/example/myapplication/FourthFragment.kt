@@ -74,13 +74,4 @@ class FourthFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    fun Fragment.findNavControllerSafely(): NavController? {
-        return if (isAdded) {
-            findNavController()
-        } else {
-            null
-        }
-    }
-
 }
