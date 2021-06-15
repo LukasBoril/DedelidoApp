@@ -32,7 +32,11 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
+        binding.buttonStartgameF1.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_ThirdFragment)
+        }
+
+        binding.buttonAbboutF1.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
