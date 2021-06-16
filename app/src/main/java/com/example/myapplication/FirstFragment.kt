@@ -32,8 +32,9 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // lubo quick einstieg in meine Fragments
         binding.buttonStartgameF1.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_ThirdFragment)
+            findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
         }
 
         binding.buttonAboutF1.setOnClickListener {
