@@ -62,12 +62,12 @@ class SixthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 binding.textViewF6.text = "Wrong!\n" + currentPlayer?.getPlayerName() + " loses valuable points!"
 
-        binding.buttonContinueF6.setOnClickListener {
-            findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
-        }
-        binding.buttonExitF6.setOnClickListener {
-            findNavController().navigate(R.id.action_sixthFragment_to_FirstFragment)
-        }
+//        binding.buttonContinueF6.setOnClickListener {
+//            findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+//        }
+//        binding.buttonExitF6.setOnClickListener {
+//            findNavController().navigate(R.id.action_sixthFragment_to_FirstFragment)
+//        }
     }
 
     override fun onDestroyView() {

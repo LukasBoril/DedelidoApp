@@ -39,7 +39,7 @@ class FifthFragment : Fragment() {
 
         // Binding of the button and setting it up
         binding.f5Button.setOnClickListener {
-            findNavController().navigate(R.id.action_fifthFragment_to_fourthFragment)
+            findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
         }
 
         // Binding of the text field for the timer
@@ -56,7 +56,7 @@ class FifthFragment : Fragment() {
             override fun onFinish() {
                 timePassed= 0
                 view?.post {
-                    findNavController().navigate(R.id.action_fifthFragment_to_fourthFragment)
+                    findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
                 }
             }
         }
