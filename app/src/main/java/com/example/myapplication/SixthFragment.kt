@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
@@ -29,6 +31,7 @@ class SixthFragment : Fragment() {
     private val binding get() = _binding!!
     private var currentPlayer : CurrentPlayer? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,22 +40,6 @@ class SixthFragment : Fragment() {
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         _binding = FragmentSixthBinding.inflate(inflater, container, false)
 
-//get player
-        val requestQueue = Volley.newRequestQueue(requireContext())
-
-        //define a request.
-        val request = StringRequest(
-            Request.Method.GET, "http://localhost:8080/whosturn",
-            Response.Listener<String> { response ->
-                this.currentPlayer = Klaxon().parse<CurrentPlayer>(response)
-            },
-
-            Response.ErrorListener {
-                //use the porvided VolleyError to display
-                //an error message
-                Log.e("ERROR", it.message!!)
-            })
-
 
         return binding.root
 
@@ -60,18 +47,50 @@ class SixthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-binding.textViewF6.text = "Wrong!\n" + currentPlayer?.getPlayerName() + " loses valuable points!"
+
+        //get player
+
+        var displayCurrentPlayer = binding.textViewF6
+
+        val requestQueue = Volley.newRequestQueue(requireContext())
+
+        requestQueue.add(getCurrentPlayer(displayCurrentPlayer))
+
+
 
         binding.buttonContinueF6.setOnClickListener {
             findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
         }
         binding.buttonExitF6.setOnClickListener {
-            findNavController().navigate(R.id.action_sixthFragment_to_FirstFragment)
+            findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun getCurrentPlayer(displayTextView : TextView) : StringRequest {
+        val url = "http://10.0.2.2:8080/whosturn/"
+
+        val request = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
+
+                if (tempcurrentPlayer != null)
+                {
+                    val displayText = "oh no!\n" + tempcurrentPlayer.getPlayerName().toString() + " just died.."
+                    displayTextView.text = displayText
+                }
+            },
+
+            Response.ErrorListener {
+                //use the porvided VolleyError to display
+                //an error message
+                Log.e("ERROR", it.message!!)
+            })
+        return request
     }
 }
