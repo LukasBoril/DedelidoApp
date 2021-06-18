@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentFifthBinding
 
@@ -44,6 +45,19 @@ class FifthFragment : Fragment() {
 
         // Binding of the text field for the timer
         var lefttime = binding.f5TimerTextView
+
+        // binding of textViews for cards
+        var viewCard1 = binding.f5ImageView
+        var id = resources.getIdentifier("com.example.myapplication:drawable/penguin_blue", null, null)
+        viewCard1.setImageResource(id)
+
+        var viewCard2 = binding.f5ImageView2
+        id = resources.getIdentifier("com.example.myapplication:drawable/penguin_blue", null, null)
+        viewCard2.setImageResource(id)
+
+        var viewCard3 = binding.f5ImageView3
+        id = resources.getIdentifier("com.example.myapplication:drawable/penguin_blue", null, null)
+        viewCard3.setImageResource(id)
 
         // Setting up a timer that counts down from 10
         var timePassed= 0
