@@ -83,4 +83,9 @@ class FifthFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+//
+//    private fun  getRandomCardView(): String {
+//
+//    }
 }
