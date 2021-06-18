@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/fifthFragment"
         android:name="com.example.myapplication.FifthFragment"
-        android:label="FifthFragment" >
+        android:label="@string/fifth_fragment_label">
         <action
             android:id="@+id/action_fifthFragment_to_FourthFragment"
             app:destination="@id/FourthFragment" />
