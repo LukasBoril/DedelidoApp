@@ -68,12 +68,12 @@ class FifthFragment : Fragment() {
         //id = resources.getIdentifier("com.example.myapplication:drawable/penguin_blue", null, null)
         //viewCard3.setImageResource(id)
 
-        // getting new cards
+        // getting new cards and displaying them in ImageView 0 to 2
         val requestQueue = Volley.newRequestQueue(requireContext())
         val request = StringRequest(
             Request.Method.GET, "http://10.0.2.2:8080/openCards",
             Response.Listener<String> { response ->
-                val allOpenCards = Klaxon().parse<OpenCards>(response)
+                val allOpenCards = ArrayList(Klaxon().parseArray<Card>(response))
                 if (allOpenCards != null) {
                     var addressFirstCard = produceCardAccessString(allOpenCards.get(0))
                     var id = resources.getIdentifier("com.example.myapplication:drawable/" + addressFirstCard, null, null)
@@ -105,16 +105,28 @@ class FifthFragment : Fragment() {
                 timePassed++
             }
 
+            // once it's done, inform the backend that no mistake was made
             override fun onFinish() {
                 timePassed= 0
+                val requestQueue = Volley.newRequestQueue(requireContext())
+                val request = StringRequest(
+                    Request.Method.PUT, "http://10.0.2.2:8080/roundCounter",
+                    Response.Listener<String> {
+                    },
+                    Response.ErrorListener {
+                        //use the porvided VolleyError to display
+                        //an error message
+                        Log.e("ERROR", it.message!! )
+                    })
+                requestQueue.add(request)
+
+                // navigate back to next-player fragment
                 view?.post {
                     findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
                 }
             }
         }
         timer.start()
-
-
     }
 
     override fun onDestroyView() {
@@ -126,11 +138,7 @@ class FifthFragment : Fragment() {
         var cardColor = card.getCardColor()
         var cardAnimal = card.getCardAnimal()
         val output = cardAnimal + "_" + cardColor
-        return output
+        return output.toLowerCase()
     }
 
-//
-//    private fun  getRandomCardView(): String {
-//
-//    }
 }
