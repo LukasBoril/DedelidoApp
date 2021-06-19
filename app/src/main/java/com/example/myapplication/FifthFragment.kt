@@ -49,9 +49,6 @@ class FifthFragment : Fragment() {
             findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
         }
 
-
-
-
         // Binding of the text field for the timer
         var lefttime = binding.f5TimerTextView
 
