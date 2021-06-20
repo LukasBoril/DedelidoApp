@@ -57,26 +57,15 @@ class FourthFragment : Fragment() {
 
         // Binding of the text field for the next player
         var displayNextPlayer = binding.f4TextView2
+
+        // REQUEST: ask backend who's turn it is
         val requestQueue = Volley.newRequestQueue(requireContext())
-
-        val request = StringRequest(
-            Request.Method.GET, "http://10.0.2.2:8080/next",
-            Response.Listener<String> {
-            },
-            Response.ErrorListener {
-                //use the porvided VolleyError to display
-                //an error message
-                Log.e("ERROR", it.message!! )
-            })
-        requestQueue.add(request)
-
         val request2 = StringRequest(
             Request.Method.GET, "http://10.0.2.2:8080/whosturn",
             Response.Listener<String> { response ->
                 val nextPlayer = Klaxon().parse<CurrentPlayer>(response)
-                if (nextPlayer != null) {
-                    displayNextPlayer.text = nextPlayer.getPlayerName()
-                }
+                displayNextPlayer.text = nextPlayer?.getPlayerName()
+
             },
             Response.ErrorListener {
                 //use the porvided VolleyError to display
@@ -84,10 +73,6 @@ class FourthFragment : Fragment() {
                 Log.e("ERROR", it.message!! )
             })
         requestQueue.add(request2)
-
-//add the call to the request queue
-        requestQueue.add(request)
-
 
 
         // Setting up a timer that counts down from 10
@@ -106,9 +91,6 @@ class FourthFragment : Fragment() {
             }
         }
         timer.start()
-
-
-
 
     }
 

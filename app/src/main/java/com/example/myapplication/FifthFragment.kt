@@ -16,6 +16,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
 import com.example.myapplication.databinding.FragmentFifthBinding
+import kotlinx.coroutines.delay
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -46,7 +47,22 @@ class FifthFragment : Fragment() {
 
         // Binding of the button and setting it up
         binding.f5Button.setOnClickListener {
-            findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
+            // REQUEST: tell backend to get next player
+            val requestQueue = Volley.newRequestQueue(requireContext())
+            val request = StringRequest(
+                Request.Method.GET, "http://10.0.2.2:8080/next",
+                Response.Listener<String> {
+                },
+                Response.ErrorListener {
+                    //use the porvided VolleyError to display
+                    //an error message
+                    Log.e("ERROR", it.message!! )
+                })
+            requestQueue.add(request)
+            println("SUCHE MICH: REQUEST ABGESETZT")
+            view?.post {
+                findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
+            }
         }
 
         // Binding of the text field for the timer
@@ -106,8 +122,20 @@ class FifthFragment : Fragment() {
             override fun onFinish() {
                 timePassed= 0
                 val requestQueue = Volley.newRequestQueue(requireContext())
-                val request = StringRequest(
+
+                var request = StringRequest(
                     Request.Method.PUT, "http://10.0.2.2:8080/roundCounter",
+                    Response.Listener<String> {
+                    },
+                    Response.ErrorListener {
+                        //use the porvided VolleyError to display
+                        //an error message
+                        Log.e("ERROR", it.message!! )
+                    })
+                requestQueue.add(request)
+
+                request = StringRequest(
+                    Request.Method.GET, "http://10.0.2.2:8080/next",
                     Response.Listener<String> {
                     },
                     Response.ErrorListener {
