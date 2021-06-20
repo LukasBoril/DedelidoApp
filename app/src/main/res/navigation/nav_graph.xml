@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_sixthFragmentTEST"
+            app:destination="@id/sixthFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -23,6 +26,43 @@
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sixthFragment"
+        android:name="com.example.myapplication.SixthFragment"
+        android:label="SixthFragment" >
+        <action
+            android:id="@+id/action_sixthFragment_to_seventhFragment"
+            app:destination="@id/seventhFragment" />
+        <action
+            android:id="@+id/action_sixthFragment_to_fourthFragment"
+            app:destination="@id/fourthFragment" />
+        <action
+            android:id="@+id/action_sixthFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_sixthFragment_to_eighthFragment"
+            app:destination="@id/eighthFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seventhFragment"
+        android:name="com.example.myapplication.SeventhFragment"
+        android:label="SeventhFragment" >
+        <action
+            android:id="@+id/action_seventhFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fourthFragment"
+        android:name="com.example.myapplication.FourthFragment"
+        android:label="FourthFragment" />
+    <fragment
+        android:id="@+id/eighthFragment"
+        android:name="com.example.myapplication.EighthFragment"
+        android:label="EighthFragment" >
+        <action
+            android:id="@+id/action_eighthFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

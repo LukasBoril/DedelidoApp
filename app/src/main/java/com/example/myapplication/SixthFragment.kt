@@ -16,8 +16,10 @@ import com.android.volley.toolbox.StringRequest
 import com.example.myapplication.databinding.FragmentSixthBinding
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
+import java.util.*
+import kotlin.concurrent.schedule
 
-
+class MyInt (var i : Int) {fun getInt(): Int {return i}}
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -30,6 +32,9 @@ class SixthFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private var currentPlayer : CurrentPlayer? = null
+    // private var currentPlayerAlive : Boolean = true
+    private var adapter: F7PlayerScoreAdapter? = null
+    private var allPlayers = mutableListOf<CurrentPlayer>()
 
 
     override fun onCreateView(
@@ -56,14 +61,83 @@ class SixthFragment : Fragment() {
 
         requestQueue.add(getCurrentPlayer(displayCurrentPlayer))
 
+        var currenPlaya = adapter?.getPlayerOnTurn()
+
+        //Timer().schedule(2000) {
+           // var hp = currentPlayer!!.getPlayerHealthPoints()
+
+            if (currenPlaya != null && currenPlaya!!.getPlayerHealthPoints() > 0) {
+                binding.buttonContinueF6.setOnClickListener {
+                    findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+                }
+                binding.buttonExitF6.setOnClickListener {
+                    findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
+                }
+            }
+            else {
+                findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
+            }
+        //}
+
+            /*
+            Timer().schedule(2000) {
+                val url = "http://10.0.2.2:8080/alive"
+                val request = StringRequest(
+                    Request.Method.GET, url,
+                    Response.Listener<String> { response ->
+                        //val currentPlayerAlive = Klaxon().parse<Integer>(response)
+                        //binding.textViewF6.text = currentPlayerAlive.toString()
+                        val currentPlayerAlive = Klaxon().parse<MyInt>(response)
+                        //binding.textViewF6.text = currentPlayerAlive.toString()
 
 
-        binding.buttonContinueF6.setOnClickListener {
-            findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
-        }
-        binding.buttonExitF6.setOnClickListener {
-            findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
-        }
+                        if (currentPlayerAlive != null) {
+
+
+                            if (currentPlayerAlive.getInt() == 0) {
+                                //fragment 8
+                                findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
+                            } else {
+                                binding.buttonContinueF6.setOnClickListener {
+                                    findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+                                }
+                                binding.buttonExitF6.setOnClickListener {
+                                    findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
+                                }
+                            }
+
+
+                        }
+
+
+                    },
+
+                    Response.ErrorListener {
+                        //use the porvided VolleyError to display
+                        //an error message
+                        Log.e("ERROR", it.message!!)
+                    })
+
+                requestQueue.add(request)
+            }
+
+    */
+
+
+//
+//        if (!currentPlayerAlive) {
+//           //fragment 8
+//            findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
+//        }
+//        else {
+//            binding.buttonContinueF6.setOnClickListener {
+//                findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+//            }
+//            binding.buttonExitF6.setOnClickListener {
+//                findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
+//            }
+//        }
+
     }
 
     override fun onDestroyView() {
@@ -81,9 +155,13 @@ class SixthFragment : Fragment() {
 
                 if (tempcurrentPlayer != null)
                 {
-                    val displayText = "oh no!\n" + tempcurrentPlayer.getPlayerName().toString() + " just died.."
+                    val displayText = "oh no!\n" + tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
                     displayTextView.text = displayText
+                    currentPlayer = tempcurrentPlayer //doe3sn't work!!!
+
                 }
+                allPlayers.addAll(mutableListOf(tempcurrentPlayer!!))
+                adapter?.notifyDataSetChanged()
             },
 
             Response.ErrorListener {
@@ -93,4 +171,53 @@ class SixthFragment : Fragment() {
             })
         return request
     }
+//
+//    fun checkPlayerAlive() {
+//        val url = "http://10.0.2.2:8080/alive"
+//        var alive : Boolean? = true
+//        val requestQueue = Volley.newRequestQueue(requireContext())
+//
+//        val request = StringRequest(
+//            Request.Method.GET, url,
+//            Response.Listener<String> { response ->
+//                val currentPlayerAlive = Klaxon().parse<Boolean>(response)
+//                if (currentPlayerAlive != null) {
+//                    this.currentPlayerAlive = currentPlayerAlive
+//                }
+//            },
+//
+//            Response.ErrorListener {
+//                //use the porvided VolleyError to display
+//                //an error message
+//                Log.e("ERROR", it.message!!)
+//            })
+//
+//        requestQueue.add(request)
+//
+//
+//    }
+
+    //original method
+//    fun checkPlayerAlive() : Boolean? {
+//        val url = "http://10.0.2.2:8080/alive/"
+//        var alive : Boolean? = true
+//        val requestQueue = Volley.newRequestQueue(requireContext())
+//
+//        val request = StringRequest(
+//            Request.Method.GET, url,
+//            Response.Listener<String> { response ->
+//                val currentPlayerAlive = Klaxon().parse<Boolean>(response)
+//                alive = currentPlayerAlive
+//            },
+//
+//            Response.ErrorListener {
+//                //use the porvided VolleyError to display
+//                //an error message
+//                Log.e("ERROR", it.message!!)
+//            })
+//
+//        requestQueue.add(request)
+//        return alive
+//
+//    }
 }
