@@ -18,6 +18,10 @@ import com.beust.klaxon.Klaxon
 import com.example.myapplication.databinding.FragmentFifthBinding
 import kotlinx.coroutines.delay
 
+class MyString(val str : String) {
+
+}
+
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
@@ -52,6 +56,7 @@ class FifthFragment : Fragment() {
             val request = StringRequest(
                 Request.Method.GET, "http://10.0.2.2:8080/next",
                 Response.Listener<String> {
+
                 },
                 Response.ErrorListener {
                     //use the porvided VolleyError to display

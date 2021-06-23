@@ -34,7 +34,9 @@ class FirstFragment : Fragment() {
 
         // lubo quick einstieg in meine Fragments
         binding.buttonStartgameF1.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_FourthFragment)
+            view?.post {
+                findNavController().navigate(R.id.action_FirstFragment_to_FourthFragment)
+            }
         }
 
         binding.buttonAboutF1.setOnClickListener {
