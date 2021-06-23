@@ -56,12 +56,18 @@ class EighthFragment : Fragment() {
         adapter = F7PlayerScoreAdapter(allPlayers, requireContext())
         binding.listViewF8.adapter = adapter
 
-
+// trial 1
         //requestQueue.add(showDeadPlayer())
 
+
+        //trial 2 using the list from the adapter -> does not work
+        /*
         var deadPlaya = adapter!!.getPlayerOnTurn()
-        val displayText = "Game over! " + deadPlaya!!.getPlayerName() + " just died..."
-        binding.textDeadF8.text = displayText
+        if (deadPlaya != null) {
+
+            val displayText = "Game over! " + deadPlaya!!.getPlayerName() + " just died..."
+            binding.textDeadF8.text = displayText
+        }
 
         /*
         as we already have updated the adapter list, we use it to determine the player with the most remaining healthpoints
@@ -72,11 +78,38 @@ class EighthFragment : Fragment() {
             binding.textWinnerF8.text = displayTextWinner
         }
 
-
+*/
 
         binding.buttonExitF8.setOnClickListener {
             findNavController().navigate(R.id.action_eighthFragment_to_FirstFragment)
         }
+
+        // trial 3: again direkt request
+
+        val url = "http://10.0.2.2:8080/whosturn/"
+
+        val request = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
+                if (tempcurrentPlayer != null)
+                {
+                    val displayText = tempcurrentPlayer.getPlayerName() + " just died!"
+                    binding.textDeadF8.text = displayText
+
+                }
+            },
+
+            Response.ErrorListener {
+                //use the porvided VolleyError to display
+                //an error message
+                Log.e("ERROR", it.message!!)
+            })
+        requestQueue.add(request)
+
+
+
+
 
 
     }
@@ -128,7 +161,17 @@ class EighthFragment : Fragment() {
 
                 allPlayers.addAll(players!!)
                 adapter?.notifyDataSetChanged()
-            },
+
+                var tempHP = 0
+                var winner : CurrentPlayer? = null
+                for (player in players) {
+                    if (player.getPlayerHealthPoints() > tempHP) {
+                        winner = player
+                        tempHP = player.getPlayerHealthPoints()
+                    }
+                }
+                binding.textWinnerF8.text = winner?.getPlayerName() + " won! congrats"
+                                      },
 
             Response.ErrorListener {
                 //use the porvided VolleyError to display

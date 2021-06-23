@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+
 import android.R
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
@@ -27,6 +27,8 @@ class SeventhFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var adapter: F7PlayerScoreAdapter? = null
+    private var allPlayers = mutableListOf<CurrentPlayer>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,41 +43,91 @@ class SeventhFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var anyDeadPlayer = deadPlayer()
-        if (anyDeadPlayer != null) {
+        /*
+        get a list of all current players from the backend, including their name and healthpoints
+        the name and the healthpoints are then bound to the Listview
+         */
+        val requestQueue = Volley.newRequestQueue(requireContext())
+        requestQueue.add(getAllPlayers())
 
-            binding.textDeadF7.text = "Oh no, " + anyDeadPlayer.getPlayerName() + " just died!"
+        adapter = F7PlayerScoreAdapter(allPlayers, requireContext())
+        binding.listViewF7.adapter = adapter
+
+        //
+        val textPLayer = binding.textPlayerF7
+        binding.listViewF7.addHeaderView(textPLayer)
+        //val textHP = binding.textHealthpointsF7
+        //binding.listViewF7.addHeaderView(textHP)
+        //val inflater = layoutInflater
+       // val header = inflater.inflate(R.layout.header, listViewF7, false) as ViewGroup
+        //myListView.addHeaderView(header, null, false)
+
+
+        //this part not added as unclear how and if needed
+        //this.setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,names));
+
+
+        //
+
+        /*
+        as we already have updated the adapter list, we use it to determine the player with the most remaining healthpoints
+         */
+        var winner = adapter!!.mostHealthpoint()
+        if (winner != null) {
+            var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
+            binding.textWinnerF7.text = displayTextWinner
         }
-/*
+
+
+
         binding.buttonExitF7.setOnClickListener {
             findNavController().navigate(R.id.action_seventhFragment_to_FirstFragment)
-
-
         }
 
- */
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    
-    public fun deadPlayer(): CurrentPlayer? {
-        var players : MutableList<CurrentPlayer>? = null
-            var dead = false
-        var deadPlayer : CurrentPlayer? = null
+    fun deadPlayer() {}
+    fun getAllPlayers() : StringRequest {
+        //var players : MutableList<CurrentPlayer>? = null
+          //  var dead = false
+      //  var deadPlayer : CurrentPlayer? = null
+        val url = "http://10.0.2.2:8080/players/"
 
-        //  get players from backend into players
-
-        val requestQueue = Volley.newRequestQueue(requireContext())
 
         //define a request.
 
         val request = StringRequest(
-            Request.Method.GET, "http://10.0.2.2:8080/players",
+            Request.Method.GET, url,
             Response.Listener<String> { response ->
-                players = Klaxon().parse<MutableList<CurrentPlayer>>(response)
+               var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
+//Klaxon().parse<MutableList<CurrentPlayer>>(response)
+
+
+                allPlayers.addAll(players!!)
+                adapter?.notifyDataSetChanged()
+
+                //val board = Klaxon().parse<Stationboard>(response)
+                //stationboardF.addAll(board!!.stationboard)
+                //adapter?.notifyDataSetChanged()
+/*
+                if (players != null) {
+                    for (player in players) {
+                        var temp = player.getPlayerHealthPoints()
+                        if (temp >= 0) {
+                            dead = true
+                        }
+                        if (dead) {
+                            deadPlayer = player
+                        }
+                    }
+                }
+
+ */
             },
 
             Response.ErrorListener {
@@ -84,8 +136,8 @@ class SeventhFragment : Fragment() {
                 Log.e("ERROR", it.message!!)
             })
 
-           requestQueue.add(request)
-
+           //requestQueue.add(request)
+/*
             if (players != null) {
                 for (player in players!!) {
                 var temp = player.getPlayerHealthPoints()
@@ -98,20 +150,15 @@ class SeventhFragment : Fragment() {
                 }
             }
         return deadPlayer
-    }
-/*
-    fun printScore() {
-        var players : MutableList<CurrentPlayer>
-        //  get players from backend into players
-
-        for (player in players) {
-
-            //TODO map player name and HP to layout...evtl with cells?
-        }
-
-    }
 
  */
+        return request
+    }
+
+
+}
+
+
 /*
     fun callFromOtherFragment() {
         val fm: FragmentManager? = fragmentManager
@@ -120,4 +167,3 @@ class SeventhFragment : Fragment() {
     }
 
  */
-}

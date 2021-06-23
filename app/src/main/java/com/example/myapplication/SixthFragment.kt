@@ -61,11 +61,54 @@ class SixthFragment : Fragment() {
 
         requestQueue.add(getCurrentPlayer(displayCurrentPlayer))
 
-        var currenPlaya = adapter?.getPlayerOnTurn()
+        val buttonContinue = binding.buttonContinueF6
+        val buttonExit = binding.buttonExitF6
+
+        val url = "http://10.0.2.2:8080/whosturn/"
+
+        val request = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
+
+                if (tempcurrentPlayer != null)
+                {
+                    val hp = tempcurrentPlayer.getPlayerHealthPoints()
+                    if (hp < 1) {
+                        Timer().schedule(2000) {
+                            view?.post {findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)} }
+                    }
+                    else { 
+                        buttonContinue.setOnClickListener {
+                            findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+                        }
+                        buttonExit.setOnClickListener {
+                            view?.post {findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)}
+
+                        }
+
+                    }
+                }
+            },
+            Response.ErrorListener {
+                //use the porvided VolleyError to display
+                //an error message
+                Log.e("ERROR", it.message!!)
+            })
+
+        requestQueue.add(request)
+
+
+
+
 
         //Timer().schedule(2000) {
            // var hp = currentPlayer!!.getPlayerHealthPoints()
 
+// Trial to use Data from adapter -> all return null!
+        /*
+
+        var currenPlaya = adapter?.getPlayerOnTurn()
             if (currenPlaya != null && currenPlaya!!.getPlayerHealthPoints() > 0) {
                 binding.buttonContinueF6.setOnClickListener {
                     findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
@@ -77,8 +120,12 @@ class SixthFragment : Fragment() {
             else {
                 findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
             }
+
+         */
         //}
 
+
+        // Trial wih separate new alive request to backend
             /*
             Timer().schedule(2000) {
                 val url = "http://10.0.2.2:8080/alive"
@@ -160,8 +207,6 @@ class SixthFragment : Fragment() {
                     currentPlayer = tempcurrentPlayer //doe3sn't work!!!
 
                 }
-                allPlayers.addAll(mutableListOf(tempcurrentPlayer!!))
-                adapter?.notifyDataSetChanged()
             },
 
             Response.ErrorListener {
@@ -220,4 +265,11 @@ class SixthFragment : Fragment() {
 //        return alive
 //
 //    }
+
+    fun nextTrial() {
+
+
+    }
 }
+
+// view?.post { findNavController.....}
