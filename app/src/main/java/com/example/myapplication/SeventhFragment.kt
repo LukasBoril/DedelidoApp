@@ -81,7 +81,7 @@ class SeventhFragment : Fragment() {
         /*
         as we already have updated the adapter list, we use it to determine the player with the most remaining healthpoints
          */
-
+/*
         var winner = adapter!!.mostHealthpoint()
         if (winner != null) {
             var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
@@ -89,10 +89,16 @@ class SeventhFragment : Fragment() {
             winnerBind.text = displayTextWinner
         }
 
+ */
+
+
+
 
 
         binding.buttonExitF7.setOnClickListener {
-         // findNavController().navigate(R.id.action_seventhFragment_to_FirstFragment)
+            findNavController().navigate(com.example.myapplication.R.id.action_seventhFragment_to_FirstFragment)
+            // findNavController().navigate(R.id.action_seventhFragment_to_FirstFragment)
+            //wieso funktioniert nicht?
         }
 
 
@@ -123,9 +129,9 @@ class SeventhFragment : Fragment() {
                 adapter?.notifyDataSetChanged()
 
                 val textPLayer = binding.textPlayerF7
-                binding.textPlayerF7.text = "Player:"
+                //binding.textPlayerF7.text = "Player:"
 
-                binding.listViewF7.addHeaderView(textPLayer)
+                //binding.listViewF7.addHeaderView(textPLayer)
 
                 //val board = Klaxon().parse<Stationboard>(response)
                 //stationboardF.addAll(board!!.stationboard)
