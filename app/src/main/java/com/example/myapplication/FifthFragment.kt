@@ -56,7 +56,13 @@ class FifthFragment : Fragment() {
             val request = StringRequest(
                 Request.Method.GET, "http://10.0.2.2:8080/next",
                 Response.Listener<String> {
-
+                        response ->
+                    val answer = Klaxon().parse<MyString>(response)
+                    if (answer?.equals("done")!!) {
+                        println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!The request has arrived")
+                    }
+                    else
+                        println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!The request has NOT arrived")
                 },
                 Response.ErrorListener {
                     //use the porvided VolleyError to display
