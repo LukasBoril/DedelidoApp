@@ -29,6 +29,7 @@
     <string name="text_enough_f7">Already enough of Dodelido?</string>
     <string name="text_player_f7">Player</string>
     <string name="text_healthpoints_f7">Health Points</string>
+    <string name="text_enough_played_f7">Already enough of Dodelido?</string>
 
     <!-- Strings used for eighth fragment -->
     <string name="button_exit_f8">Exit</string>

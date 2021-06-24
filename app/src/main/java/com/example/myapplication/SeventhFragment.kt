@@ -47,20 +47,29 @@ class SeventhFragment : Fragment() {
         get a list of all current players from the backend, including their name and healthpoints
         the name and the healthpoints are then bound to the Listview
          */
+        val winnerBind = binding.textWinnerF7
+       // binding.textWinnerF7.text = allPlayers?.mostHealthpoint()?.name? : "-"
+
+        //binding.textEnoughF7.text = "Already enough of Dodelido?"  //how do I do that shows value form strings.xml?
+
+
+
         val requestQueue = Volley.newRequestQueue(requireContext())
         requestQueue.add(getAllPlayers())
 
         adapter = F7PlayerScoreAdapter(allPlayers, requireContext())
         binding.listViewF7.adapter = adapter
 
-        //
+        /*
         val textPLayer = binding.textPlayerF7
+        binding.textPlayerF7.text = "Player:"
         binding.listViewF7.addHeaderView(textPLayer)
+        */
         //val textHP = binding.textHealthpointsF7
         //binding.listViewF7.addHeaderView(textHP)
         //val inflater = layoutInflater
        // val header = inflater.inflate(R.layout.header, listViewF7, false) as ViewGroup
-        //myListView.addHeaderView(header, null, false)
+        //listViewF7.addHeaderView(header, null, false)
 
 
         //this part not added as unclear how and if needed
@@ -72,16 +81,18 @@ class SeventhFragment : Fragment() {
         /*
         as we already have updated the adapter list, we use it to determine the player with the most remaining healthpoints
          */
+
         var winner = adapter!!.mostHealthpoint()
         if (winner != null) {
             var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
-            binding.textWinnerF7.text = displayTextWinner
+            //binding.textWinnerF7.text = displayTextWinner
+            winnerBind.text = displayTextWinner
         }
 
 
 
         binding.buttonExitF7.setOnClickListener {
-            findNavController().navigate(R.id.action_seventhFragment_to_FirstFragment)
+         // findNavController().navigate(R.id.action_seventhFragment_to_FirstFragment)
         }
 
 
@@ -111,6 +122,11 @@ class SeventhFragment : Fragment() {
                 allPlayers.addAll(players!!)
                 adapter?.notifyDataSetChanged()
 
+                val textPLayer = binding.textPlayerF7
+                binding.textPlayerF7.text = "Player:"
+
+                binding.listViewF7.addHeaderView(textPLayer)
+
                 //val board = Klaxon().parse<Stationboard>(response)
                 //stationboardF.addAll(board!!.stationboard)
                 //adapter?.notifyDataSetChanged()
@@ -128,6 +144,21 @@ class SeventhFragment : Fragment() {
                 }
 
  */
+
+                var tempHP = 0
+                var winner : CurrentPlayer? = null
+                for (player in players) {
+                    if (player.getPlayerHealthPoints() > tempHP) {
+                        winner = player
+                        tempHP = player.getPlayerHealthPoints()
+                    }
+                }
+
+                if (winner != null) {
+                    var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
+                    //binding.textWinnerF7.text = displayTextWinner
+                    binding.textWinnerF7.text = displayTextWinner
+                }
             },
 
             Response.ErrorListener {
