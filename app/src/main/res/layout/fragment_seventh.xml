@@ -14,18 +14,23 @@
         android:text="@string/text_enough_played_f7"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/text_winner_f7"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_winner_f7"
-        android:layout_width="317dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/text_healthpoints_f7"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_enough_f7" />
 
@@ -33,34 +38,27 @@
         android:id="@+id/text_player_f7"
         android:layout_width="292dp"
         android:layout_height="27dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/text_player_f7"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/list_view_f7"
-        app:layout_constraintEnd_toStartOf="@+id/text_healthpoints_f7"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_winner_f7"
-        app:layout_constraintVertical_bias="0.464" />
+        app:layout_constraintStart_toStartOf="@+id/list_view_f7"
+        app:layout_constraintTop_toTopOf="@+id/text_healthpoints_f7" />
 
     <TextView
         android:id="@+id/text_healthpoints_f7"
         android:layout_width="349dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="104dp"
         android:text="@string/text_healthpoints_f7"
         android:textSize="16sp"
+
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/list_view_f7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/list_view_f7"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/text_player_f7"
-        app:layout_constraintTop_toBottomOf="@+id/text_winner_f7"
-        app:layout_constraintVertical_bias="0.458" />
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--app:layout_constraintEnd_toEndOf="parent" -->
 
     <Button
         android:id="@+id/button_exit_f7"
@@ -69,20 +67,22 @@
         android:text="@string/button_exit_f7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_view_f7" />
 
     <ListView
         android:id="@+id/list_view_f7"
-        android:layout_width="704dp"
-        android:layout_height="155dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button_exit_f7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_winner_f7"
+        app:layout_constraintTop_toBottomOf="@+id/text_player_f7"
         app:layout_constraintVertical_bias="0.863" />
 </androidx.constraintlayout.widget.ConstraintLayout>

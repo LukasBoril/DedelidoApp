@@ -21,10 +21,12 @@
 
 
     <!-- Strings used for sixth fragment -->
+    <string name="sixth_fragment_label">Oh no!</string>
     <string name="button_continue_f6">Continue</string>
     <string name="button_exit">Exit</string>
 
     <!-- Strings used for seventh fragment -->
+    <string name="seventh_fragment_label">Leave Game</string>
     <string name="button_exit_f7">Exit</string>
     <string name="text_enough_f7">Already enough of Dodelido?</string>
     <string name="text_player_f7">Player</string>
@@ -32,6 +34,7 @@
     <string name="text_enough_played_f7">Already enough of Dodelido?</string>
 
     <!-- Strings used for eighth fragment -->
+    <string name="eighth_fragment_label">Game Over!</string>
     <string name="button_exit_f8">Exit</string>
     <string name="text_player_f8">Player</string>
     <string name="text_healthpoints_f8">Health Points</string>

@@ -12,8 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="TextView"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/text_winner_f8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,32 +25,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/text_healthpoints_f8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_dead_f8" />
 
+    <!--app:layout_constraintBottom_toTopOf="@+id/text_player_f8" -->
+
     <TextView
         android:id="@+id/text_healthpoints_f8"
-        android:layout_width="341dp"
-        android:layout_height="21dp"
-        android:layout_marginBottom="78dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/list_view_f8"
+        android:layout_width="349dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_healthpoints_f8"
+
+        android:textSize="16sp"
+
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_winner_f8"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_player_f8"
+        app:layout_constraintTop_toBottomOf="@+id/text_winner_f8" />
 
     <TextView
         android:id="@+id/text_player_f8"
-        android:layout_width="334dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="78dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/list_view_f8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_winner_f8" />
+        android:layout_width="292dp"
+        android:layout_height="27dp"
+        android:text="@string/text_player_f8"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/list_view_f8"
+        app:layout_constraintTop_toTopOf="@+id/text_healthpoints_f8" />
 
     <Button
         android:id="@+id/button_exit_f8"
@@ -57,14 +69,21 @@
         android:text="@string/button_exit_f7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_view_f8" />
 
     <ListView
         android:id="@+id/list_view_f8"
-        android:layout_width="672dp"
-        android:layout_height="165dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toTopOf="@+id/button_exit_f8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_player_f8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

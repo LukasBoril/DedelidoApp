@@ -202,7 +202,7 @@ class SixthFragment : Fragment() {
 
                 if (tempcurrentPlayer != null)
                 {
-                    val displayText = "oh no!\n" + tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
+                    val displayText = tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
                     displayTextView.text = displayText
                     currentPlayer = tempcurrentPlayer //doe3sn't work!!!
 
