@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -55,17 +57,19 @@ class FourthFragment : Fragment() {
 ////// Question: if I do this in the onTick method directly, it does not work... why?
         var lefttime = binding.f4TextView3
 
-        // Binding of the text field for the next player
-        var displayNextPlayer = binding.f4TextView2
+        val model: CurrentPlayerViewModel by activityViewModels()
+        model.name.observe(viewLifecycleOwner, Observer<String>{newVal ->
+            // update UI
+            binding.f4TextView2.text = newVal
+        })
 
-        // REQUEST: ask backend who's turn it is
+            // REQUEST: ask backend who's turn it is
         val requestQueue = Volley.newRequestQueue(requireContext())
         val request2 = StringRequest(
             Request.Method.GET, "http://10.0.2.2:8080/whosturn",
             Response.Listener<String> { response ->
                 val nextPlayer = Klaxon().parse<CurrentPlayer>(response)
-                displayNextPlayer.text = nextPlayer?.getPlayerName()
-
+                model.name.value = nextPlayer?.getPlayerName()
             },
             Response.ErrorListener {
                 //use the porvided VolleyError to display
