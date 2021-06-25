@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
@@ -49,6 +51,55 @@ class FifthFragment : Fragment() {
         // Set view to landscape
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        val modelTime: CountDownViewModel by activityViewModels()
+        modelTime.leftOverTime.observe(viewLifecycleOwner, Observer<Int> { newVal ->
+            // update UI
+            binding.f5TimerTextView.text = newVal.toString()
+        })
+
+        // Setting up a timer that counts down from 10
+        var timePassed= 0
+        val timer = object: CountDownTimer(5000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                modelTime.leftOverTime.value = (5-timePassed)
+                timePassed++
+            }
+
+            // once it's done, inform the backend that no mistake was made
+            override fun onFinish() {
+                timePassed= 0
+                val requestQueue = Volley.newRequestQueue(requireContext())
+
+                var request = StringRequest(
+                    Request.Method.PUT, "http://10.0.2.2:8080/roundCounter",
+                    Response.Listener<String> {
+                    },
+                    Response.ErrorListener {
+                        //use the porvided VolleyError to display
+                        //an error message
+                        Log.e("ERROR", it.message!! )
+                    })
+                requestQueue.add(request)
+
+                request = StringRequest(
+                    Request.Method.GET, "http://10.0.2.2:8080/next",
+                    Response.Listener<String> {
+                    },
+                    Response.ErrorListener {
+                        //use the porvided VolleyError to display
+                        //an error message
+                        Log.e("ERROR", it.message!! )
+                    })
+                requestQueue.add(request)
+
+                // navigate back to next-player fragment
+                view?.post {
+                    findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
+                }
+            }
+        }
+        timer.start()
+
         // Binding of the button and setting it up
         binding.f5Button.setOnClickListener {
             // REQUEST: tell backend to get next player
@@ -56,7 +107,6 @@ class FifthFragment : Fragment() {
             val request = StringRequest(
                 Request.Method.GET, "http://10.0.2.2:8080/next",
                 Response.Listener<String> {
-
                 },
                 Response.ErrorListener {
                     //use the porvided VolleyError to display
@@ -64,13 +114,14 @@ class FifthFragment : Fragment() {
                     Log.e("ERROR", it.message!! )
                 })
             requestQueue.add(request)
+            timer.cancel()
             view?.post {
                 findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
             }
         }
 
         // Binding of the text field for the timer
-        var lefttime = binding.f5TimerTextView
+       // var lefttime = binding.f5TimerTextView
 
         // binding of textViews for cards
         var viewCard1 = binding.f5ImageView
@@ -114,48 +165,7 @@ class FifthFragment : Fragment() {
 
 
 
-        // Setting up a timer that counts down from 10
-        var timePassed= 0
-        val timer = object: CountDownTimer(5000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                lefttime.text = (5-timePassed).toString()
-                timePassed++
-            }
 
-            // once it's done, inform the backend that no mistake was made
-            override fun onFinish() {
-                timePassed= 0
-                val requestQueue = Volley.newRequestQueue(requireContext())
-
-                var request = StringRequest(
-                    Request.Method.PUT, "http://10.0.2.2:8080/roundCounter",
-                    Response.Listener<String> {
-                    },
-                    Response.ErrorListener {
-                        //use the porvided VolleyError to display
-                        //an error message
-                        Log.e("ERROR", it.message!! )
-                    })
-                requestQueue.add(request)
-
-                request = StringRequest(
-                    Request.Method.GET, "http://10.0.2.2:8080/next",
-                    Response.Listener<String> {
-                    },
-                    Response.ErrorListener {
-                        //use the porvided VolleyError to display
-                        //an error message
-                        Log.e("ERROR", it.message!! )
-                    })
-                requestQueue.add(request)
-
-                // navigate back to next-player fragment
-                view?.post {
-                    findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
-                }
-            }
-        }
-        timer.start()
     }
 
     override fun onDestroyView() {

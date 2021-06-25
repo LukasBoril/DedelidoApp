@@ -55,7 +55,13 @@ class FourthFragment : Fragment() {
 
         // Binding of the text field for the timer
 ////// Question: if I do this in the onTick method directly, it does not work... why?
-        var lefttime = binding.f4TextView3
+        //var lefttime = binding.f4TextView3
+        val modelTime: CountDownViewModel by activityViewModels()
+        modelTime.leftOverTime.observe(viewLifecycleOwner, Observer<Int> { newVal ->
+            // update UI
+            binding.f4TextView3.text = newVal.toString()
+        })
+
 
         val model: CurrentPlayerViewModel by activityViewModels()
         model.name.observe(viewLifecycleOwner, Observer<String>{newVal ->
@@ -83,7 +89,7 @@ class FourthFragment : Fragment() {
         var timePassed= 0
         val timer = object: CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                lefttime.text = (10-timePassed).toString()
+            modelTime.leftOverTime.value = (10-timePassed)
                 timePassed++
             }
 
@@ -95,6 +101,7 @@ class FourthFragment : Fragment() {
             }
         }
         timer.start()
+
 
     }
 
