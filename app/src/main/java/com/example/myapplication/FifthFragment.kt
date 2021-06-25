@@ -25,7 +25,13 @@ class MyString(val str : String) {
 }
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * Fifth fragment class
+ * This fragment is the actual "game GUI", where three cards are presented to the GUI
+ * The current player needs to make a statement within 5 sec. The leftover time is displayed in real-time
+ * The other player need to evaluate the made statement. If the current player did a mistake, they need to push the "wrong" button
+ *
+ * @author Lukas Boril
+ * @version 2021.06.11
  */
 class FifthFragment : Fragment() {
 
@@ -51,13 +57,14 @@ class FifthFragment : Fragment() {
         // Set view to landscape
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        // link the timer CountDownViewModel to the textView
         val modelTime: CountDownViewModel by activityViewModels()
         modelTime.leftOverTime.observe(viewLifecycleOwner, Observer<Int> { newVal ->
             // update UI
             binding.f5TimerTextView.text = newVal.toString()
         })
 
-        // Setting up a timer that counts down from 10
+        // Setting up a timer that counts down from 5
         var timePassed= 0
         val timer = object: CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -65,7 +72,7 @@ class FifthFragment : Fragment() {
                 timePassed++
             }
 
-            // once it's done, inform the backend that no mistake was made
+            // once it's done, inform the backend that no mistake was made and that it's the next plaxers turn
             override fun onFinish() {
                 timePassed= 0
                 val requestQueue = Volley.newRequestQueue(requireContext())
@@ -98,9 +105,10 @@ class FifthFragment : Fragment() {
                 }
             }
         }
+        // start the timer
         timer.start()
 
-        // Binding of the button and setting it up
+        // Binding of the button and setting it up. If it gets pushed the backend is informed that it's the next plaxers turn. Navigate to fragment 4
         binding.f5Button.setOnClickListener {
             // REQUEST: tell backend to get next player
             val requestQueue = Volley.newRequestQueue(requireContext())
@@ -120,21 +128,12 @@ class FifthFragment : Fragment() {
             }
         }
 
-        // Binding of the text field for the timer
-       // var lefttime = binding.f5TimerTextView
-
         // binding of textViews for cards
         var viewCard1 = binding.f5ImageView
-        //var id = resources.getIdentifier("com.example.myapplication:drawable/penguin_blue", null, null)
-        //iewCard1.setImageResource(id)
 
         var viewCard2 = binding.f5ImageView2
-        //id = resources.getIdentifier("com.example.myapplication:drawable/penguin_blue", null, null)
-        //viewCard2.setImageResource(id)
 
         var viewCard3 = binding.f5ImageView3
-        //id = resources.getIdentifier("com.example.myapplication:drawable/penguin_blue", null, null)
-        //viewCard3.setImageResource(id)
 
         // getting new cards and displaying them in ImageView 0 to 2
         val requestQueue = Volley.newRequestQueue(requireContext())
@@ -162,10 +161,6 @@ class FifthFragment : Fragment() {
                 Log.e("ERROR", it.message!! )
             })
         requestQueue.add(request)
-
-
-
-
     }
 
     override fun onDestroyView() {
@@ -173,6 +168,7 @@ class FifthFragment : Fragment() {
         _binding = null
     }
 
+    // funtion to produce strings used to access the drawable
     fun produceCardAccessString(card : Card): String {
         var cardColor = card.getCardColor()
         var cardAnimal = card.getCardAnimal()
