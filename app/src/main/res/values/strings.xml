@@ -6,6 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="about">About</string>
     <string name="previous">Previous</string>
+    <string name="next">Start</string>
 
     <!-- Strings used for fourth fragment -->
     <string name="fourth_fragment_label">Get Ready for next turn</string>
@@ -23,12 +24,30 @@
 
 
     <!-- Strings used for sixth fragment -->
+    <string name="sixth_fragment_label">Oh no!</string>
     <string name="button_continue_f6">Continue</string>
     <string name="button_exit">Exit</string>
 
     <!-- Strings used for seventh fragment -->
+    <string name="seventh_fragment_label">Leave Game</string>
     <string name="button_exit_f7">Exit</string>
+    <string name="text_enough_f7">Already enough of Dodelido?</string>
+    <string name="text_player_f7">Player</string>
+    <string name="text_healthpoints_f7">Health Points</string>
+    <string name="text_enough_played_f7">Already enough of Dodelido?</string>
 
+    <!-- Strings used for eighth fragment -->
+    <string name="eighth_fragment_label">Game Over!</string>
+    <string name="button_exit_f8">Exit</string>
+    <string name="text_player_f8">Player</string>
+    <string name="text_healthpoints_f8">Health Points</string>
 
+    <!-- Strings used for ninth fragment -->
+    <string name="ninth_fragment_label">About Dodelido</string>
+    <string name="button_exit_f9">Exit</string>
+    <string name="title_about_f9">Das Ziel von Dodelido</string>
+    <string name="title_instruction_f9">Playing instructions</string>
+    <string name="text_about_f9">Jeder der Spieler bekommt gleichmäßig viele Karten auf die Hand. Diese müssen so schnell wie möglich abgelegt werden. Sieger des Spiels ist, wer als erstes alle Karten abgelegt hat. Dabei müssen beim Ablegen bestimmte Regeln befolgt werden. Dazu gehört, dass binnen drei Sekunden eine Aussage zu in den Ablagestapeln offen sichtbaren Karten getroffen werden muss. Ist diese Aussage falsch oder wird zu langsam getätigt, müssen Karten auf die Hand genommen werden, womit das Ziel als Erstes alle Karten abgelegt zu haben selbstverständlich verzögert wird.</string>
 
+    <string name="text_instruction_f9">Das Spiel beihnahltet 25 verschiedene Karten: 5 tiere in je 5 verschiednene Farben. In der Mitte der Spieler werden drei Ablagestapel gebildet.</string>
 </resources>

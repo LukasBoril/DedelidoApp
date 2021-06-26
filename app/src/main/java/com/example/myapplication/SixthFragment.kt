@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
@@ -14,8 +16,10 @@ import com.android.volley.toolbox.StringRequest
 import com.example.myapplication.databinding.FragmentSixthBinding
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
+import java.util.*
+import kotlin.concurrent.schedule
 
-
+class MyInt (var i : Int) {fun getInt(): Int {return i}}
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -28,6 +32,10 @@ class SixthFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private var currentPlayer : CurrentPlayer? = null
+    // private var currentPlayerAlive : Boolean = true
+    private var adapter: F7PlayerScoreAdapter? = null
+    private var allPlayers = mutableListOf<CurrentPlayer>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,22 +45,6 @@ class SixthFragment : Fragment() {
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         _binding = FragmentSixthBinding.inflate(inflater, container, false)
 
-//get player
-        val requestQueue = Volley.newRequestQueue(requireContext())
-
-        //define a request.
-        val request = StringRequest(
-            Request.Method.GET, "http://localhost:8080/whosturn",
-            Response.Listener<String> { response ->
-                this.currentPlayer = Klaxon().parse<CurrentPlayer>(response)
-            },
-
-            Response.ErrorListener {
-                //use the porvided VolleyError to display
-                //an error message
-                Log.e("ERROR", it.message!!)
-            })
-
 
         return binding.root
 
@@ -60,18 +52,224 @@ class SixthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-binding.textViewF6.text = "Wrong!\n" + currentPlayer?.getPlayerName() + " loses valuable points!"
 
-//        binding.buttonContinueF6.setOnClickListener {
-//            findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+        //get player
+
+        var displayCurrentPlayer = binding.textViewF6
+
+        val requestQueue = Volley.newRequestQueue(requireContext())
+
+        requestQueue.add(getCurrentPlayer(displayCurrentPlayer))
+
+        val buttonContinue = binding.buttonContinueF6
+        val buttonExit = binding.buttonExitF6
+
+        val url = "http://10.0.2.2:8080/whosturn/"
+
+        val request = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
+
+                if (tempcurrentPlayer != null)
+                {
+                    val hp = tempcurrentPlayer.getPlayerHealthPoints()
+                    if (hp < 1) {
+                        Timer().schedule(2000) {
+                            view?.post {findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)} }
+                    }
+                    else { 
+                        buttonContinue.setOnClickListener {
+                            findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+                        }
+                        buttonExit.setOnClickListener {
+                            view?.post {findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)}
+
+                        }
+
+                    }
+                }
+            },
+            Response.ErrorListener {
+                //use the porvided VolleyError to display
+                //an error message
+                Log.e("ERROR", it.message!!)
+            })
+
+        requestQueue.add(request)
+
+
+
+
+
+        //Timer().schedule(2000) {
+           // var hp = currentPlayer!!.getPlayerHealthPoints()
+
+// Trial to use Data from adapter -> all return null!
+        /*
+
+        var currenPlaya = adapter?.getPlayerOnTurn()
+            if (currenPlaya != null && currenPlaya!!.getPlayerHealthPoints() > 0) {
+                binding.buttonContinueF6.setOnClickListener {
+                    findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+                }
+                binding.buttonExitF6.setOnClickListener {
+                    findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
+                }
+            }
+            else {
+                findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
+            }
+
+         */
+        //}
+
+
+        // Trial wih separate new alive request to backend
+            /*
+            Timer().schedule(2000) {
+                val url = "http://10.0.2.2:8080/alive"
+                val request = StringRequest(
+                    Request.Method.GET, url,
+                    Response.Listener<String> { response ->
+                        //val currentPlayerAlive = Klaxon().parse<Integer>(response)
+                        //binding.textViewF6.text = currentPlayerAlive.toString()
+                        val currentPlayerAlive = Klaxon().parse<MyInt>(response)
+                        //binding.textViewF6.text = currentPlayerAlive.toString()
+
+
+                        if (currentPlayerAlive != null) {
+
+
+                            if (currentPlayerAlive.getInt() == 0) {
+                                //fragment 8
+                                findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
+                            } else {
+                                binding.buttonContinueF6.setOnClickListener {
+                                    findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+                                }
+                                binding.buttonExitF6.setOnClickListener {
+                                    findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
+                                }
+                            }
+
+
+                        }
+
+
+                    },
+
+                    Response.ErrorListener {
+                        //use the porvided VolleyError to display
+                        //an error message
+                        Log.e("ERROR", it.message!!)
+                    })
+
+                requestQueue.add(request)
+            }
+
+    */
+
+
+//
+//        if (!currentPlayerAlive) {
+//           //fragment 8
+//            findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
 //        }
-//        binding.buttonExitF6.setOnClickListener {
-//            findNavController().navigate(R.id.action_sixthFragment_to_FirstFragment)
+//        else {
+//            binding.buttonContinueF6.setOnClickListener {
+//                findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
+//            }
+//            binding.buttonExitF6.setOnClickListener {
+//                findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
+//            }
 //        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    fun getCurrentPlayer(displayTextView : TextView) : StringRequest {
+        val url = "http://10.0.2.2:8080/whosturn/"
+
+        val request = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
+
+                if (tempcurrentPlayer != null)
+                {
+                    val displayText = tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
+                    displayTextView.text = displayText
+                    currentPlayer = tempcurrentPlayer //doe3sn't work!!!
+
+                }
+            },
+
+            Response.ErrorListener {
+                //use the porvided VolleyError to display
+                //an error message
+                Log.e("ERROR", it.message!!)
+            })
+        return request
+    }
+//
+//    fun checkPlayerAlive() {
+//        val url = "http://10.0.2.2:8080/alive"
+//        var alive : Boolean? = true
+//        val requestQueue = Volley.newRequestQueue(requireContext())
+//
+//        val request = StringRequest(
+//            Request.Method.GET, url,
+//            Response.Listener<String> { response ->
+//                val currentPlayerAlive = Klaxon().parse<Boolean>(response)
+//                if (currentPlayerAlive != null) {
+//                    this.currentPlayerAlive = currentPlayerAlive
+//                }
+//            },
+//
+//            Response.ErrorListener {
+//                //use the porvided VolleyError to display
+//                //an error message
+//                Log.e("ERROR", it.message!!)
+//            })
+//
+//        requestQueue.add(request)
+//
+//
+//    }
+
+    //original method
+//    fun checkPlayerAlive() : Boolean? {
+//        val url = "http://10.0.2.2:8080/alive/"
+//        var alive : Boolean? = true
+//        val requestQueue = Volley.newRequestQueue(requireContext())
+//
+//        val request = StringRequest(
+//            Request.Method.GET, url,
+//            Response.Listener<String> { response ->
+//                val currentPlayerAlive = Klaxon().parse<Boolean>(response)
+//                alive = currentPlayerAlive
+//            },
+//
+//            Response.ErrorListener {
+//                //use the porvided VolleyError to display
+//                //an error message
+//                Log.e("ERROR", it.message!!)
+//            })
+//
+//        requestQueue.add(request)
+//        return alive
+//
+//    }
+
+    fun nextTrial() {
+
+
+    }
 }
+
+// view?.post { findNavController.....}
