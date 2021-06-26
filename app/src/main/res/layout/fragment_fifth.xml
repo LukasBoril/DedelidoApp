@@ -69,7 +69,6 @@
         android:layout_marginStart="49dp"
         android:layout_marginTop="66dp"
         android:layout_marginEnd="61dp"
-        android:text="TextView"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/f5_imageView3"
