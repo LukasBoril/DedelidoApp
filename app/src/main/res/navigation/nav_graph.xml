@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_sixthFragmentTEST"
             app:destination="@id/sixthFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_ninthFragment"
+            app:destination="@id/ninthFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -31,7 +34,7 @@
     <fragment
         android:id="@+id/sixthFragment"
         android:name="com.example.myapplication.SixthFragment"
-        android:label="SixthFragment" >
+        android:label="@string/sixth_fragment_label" >
         <action
             android:id="@+id/action_sixthFragment_to_seventhFragment"
             app:destination="@id/seventhFragment" />
@@ -48,7 +51,7 @@
     <fragment
         android:id="@+id/seventhFragment"
         android:name="com.example.myapplication.SeventhFragment"
-        android:label="SeventhFragment" >
+        android:label="@string/seventh_fragment_label" >
         <action
             android:id="@+id/action_seventhFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
@@ -60,9 +63,18 @@
     <fragment
         android:id="@+id/eighthFragment"
         android:name="com.example.myapplication.EighthFragment"
-        android:label="EighthFragment" >
+        android:label="@string/eighth_fragment_label" >
         <action
             android:id="@+id/action_eighthFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ninthFragment"
+        android:name="com.example.myapplication.NinthFragment"
+        android:label="@string/ninth_fragment_label"
+        tools:layout="@layout/fragment_ninth" >
+        <action
+            android:id="@+id/action_ninthFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

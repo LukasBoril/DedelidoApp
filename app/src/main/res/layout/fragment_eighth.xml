@@ -10,7 +10,7 @@
         android:id="@+id/text_dead_f8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textSize="18dp"
         android:textStyle="bold"
