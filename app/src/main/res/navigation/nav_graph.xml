@@ -6,31 +6,61 @@
     app:startDestination="@id/FirstFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.myapplication.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_sixthFragmentTEST"
-            app:destination="@id/sixthFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_ninthFragment"
-            app:destination="@id/ninthFragment" />
-    </fragment>
+    android:id="@+id/FirstFragment"
+    android:name="com.example.myapplication.FirstFragment"
+    android:label="@string/first_fragment_label"
+    tools:layout="@layout/fragment_first">
+    <action
+        android:id="@+id/action_FirstFragment_to_ThirdFragment"
+        app:destination="@id/ThirdFragment" />
+    <action
+        android:id="@+id/action_FirstFragment_to_ninthFragment"
+        app:destination="@id/SecondFragment" />
+</fragment>
+<fragment
+android:id="@+id/ThirdFragment"
+android:name="com.example.myapplication.ThirdFragment"
+android:label=""
+tools:layout="@layout/fragment_third"/>
+   </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.myapplication.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+
+        android:id="@+id/FourthFragment"
+
+        android:name="com.example.myapplication.FourthFragment"
+
+        android:label="@string/fourth_fragment_label"
+
+        tools:layout="@layout/fragment_fourth">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+
+            android:id="@+id/action_FourthFragment_to_FirstFragment"
+
             app:destination="@id/FirstFragment" />
+
+        <action
+
+            android:id="@+id/action_FourthFragment_to_fifthFragment"
+
+            app:destination="@id/fifthFragment" />
+
     </fragment>
+
+    <fragment
+
+        android:id="@+id/fifthFragment"
+
+        android:name="com.example.myapplication.FifthFragment"
+
+        android:label="@string/fifth_fragment_label">
+
+        <action
+            android:id="@+id/action_fifthFragment_to_FourthFragment"
+            app:destination="@id/FourthFragment" />
+
+    </fragment>
+    
     <fragment
         android:id="@+id/sixthFragment"
         android:name="com.example.myapplication.SixthFragment"
