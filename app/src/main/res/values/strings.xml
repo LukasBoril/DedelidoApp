@@ -9,12 +9,15 @@
     <string name="next">Start</string>
 
     <!-- Strings used for fourth fragment -->
-    <string name="backToMain">End current Game</string>
-    <string name="titelNextPlayer">The next player will be:</string>
-
-
+    <string name="fourth_fragment_label">Get Ready for next turn</string>
+    <string name="back_To_Main">End current Game</string>
+    <string name="title_next_player">The next player will be:</string>
 
     <!-- Strings used for fifth fragment -->
+    <string name="fifth_fragment_label">DoDeLiDo</string>
+    <string name="wrong">WRONG   !!!</string>
+
+
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
