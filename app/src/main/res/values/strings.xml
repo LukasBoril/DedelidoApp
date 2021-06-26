@@ -8,14 +8,24 @@
     <string name="previous">Previous</string>
     <string name="next">Start</string>
 
+
     <!-- Strings used for fourth fragment -->
+
     <string name="fourth_fragment_label">Get Ready for next turn</string>
+
     <string name="back_To_Main">End current Game</string>
+
     <string name="title_next_player">The next player will be:</string>
 
+
+
     <!-- Strings used for fifth fragment -->
+
     <string name="fifth_fragment_label">DoDeLiDo</string>
+
     <string name="wrong">WRONG   !!!</string>
+
+
 
 
 
