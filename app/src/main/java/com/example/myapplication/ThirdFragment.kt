@@ -35,7 +35,7 @@ class ThirdFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private var playerList = mutableListOf<CurrentPlayer>()
-    private var adapter : PlayerAdapter? = null
+    private var adapter: PlayerAdapter? = null
 
 
     override fun onCreateView(
@@ -53,8 +53,8 @@ class ThirdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val requestQueue = Volley.newRequestQueue(requireContext())
-      //  val adapter : ArrayAdapter<CurrentPlayer> = ArrayAdapter<CurrentPlayer>(requireContext(), android.R.layout.simple_list_item_1, android.R.id.text1, playerList);
-       adapter = PlayerAdapter(playerList, requireContext())
+        //  val adapter : ArrayAdapter<CurrentPlayer> = ArrayAdapter<CurrentPlayer>(requireContext(), android.R.layout.simple_list_item_1, android.R.id.text1, playerList);
+        adapter = PlayerAdapter(playerList, requireContext())
         binding.listPlayersF3.adapter = adapter
 
         binding.buttonAddplayerF3.setOnClickListener {
@@ -109,13 +109,13 @@ class ThirdFragment : Fragment() {
             }
         }
 
-    }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
     }
 }
+
 
 
