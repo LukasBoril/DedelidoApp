@@ -64,9 +64,9 @@ class FifthFragment : Fragment() {
             binding.f5TimerTextView.text = newVal.toString()
         })
 
-        // Setting up a timer that counts down from 5
+        // Setting up a timer that counts down from 10, but displays a count down from 5
         var timePassed= 0
-        val timer = object: CountDownTimer(5000, 1000) {
+        val timer = object: CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 modelTime.leftOverTime.value = (5-timePassed)
                 timePassed++
@@ -108,12 +108,12 @@ class FifthFragment : Fragment() {
         // start the timer
         timer.start()
 
-        // Binding of the button and setting it up. If it gets pushed the backend is informed that it's the next plaxers turn. Navigate to fragment 4
+        // Binding of the button and setting it up. If it gets pushed the current player is punished and it is navigated to fragment6
         binding.f5Button.setOnClickListener {
-            // REQUEST: tell backend to get next player
+            // REQUEST: tell backend to punish current player
             val requestQueue = Volley.newRequestQueue(requireContext())
             val request = StringRequest(
-                Request.Method.GET, "http://10.0.2.2:8080/next",
+                Request.Method.GET, "http://10.0.2.2:8080/fail",
                 Response.Listener<String> {
                 },
                 Response.ErrorListener {
@@ -124,7 +124,7 @@ class FifthFragment : Fragment() {
             requestQueue.add(request)
             timer.cancel()
             view?.post {
-                findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
+                findNavController().navigate(R.id.action_fifthFragment_to_sixthFragment)
             }
         }
 

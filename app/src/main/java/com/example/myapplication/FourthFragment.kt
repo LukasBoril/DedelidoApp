@@ -55,7 +55,7 @@ class FourthFragment : Fragment() {
 
         // Binding of the button. This will abort the current game
         binding.f4ButtonBackToMain.setOnClickListener {
-            findNavController().navigate(R.id.action_FourthFragment_to_FirstFragment)
+            findNavController().navigate(R.id.action_FourthFragment_to_seventhFragment)
         }
 
         // Binding of the text field for the timer and linking it to the CountDownViewModel

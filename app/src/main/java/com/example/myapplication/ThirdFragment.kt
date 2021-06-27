@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -85,7 +86,27 @@ class ThirdFragment : Fragment() {
                     Log.e("ERROR", it.message!!)
                 })
             requestQueue.add(getRequest)
+        }
 
+        binding.buttonStartgameF3.setOnClickListener {
+            val getRequest = StringRequest(
+                Request.Method.GET, "http://10.0.2.2:8080/start/",
+                Response.Listener<String> {
+                        // response ->
+                    // var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
+                    // playerList.addAll(players!!)
+                    // adapter?.notifyDataSetChanged()
+
+                },
+                Response.ErrorListener {
+                    //use the porvided VolleyError to display
+                    //an error message
+                    Log.e("ERROR", it.message!!)
+                })
+            requestQueue.add(getRequest)
+            view?.post {
+                findNavController().navigate(R.id.action_ThirdFragment_to_FourthFragment)
+            }
         }
 
     }

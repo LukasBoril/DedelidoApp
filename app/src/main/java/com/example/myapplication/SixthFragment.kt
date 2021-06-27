@@ -80,6 +80,16 @@ class SixthFragment : Fragment() {
                     }
                     else { 
                         buttonContinue.setOnClickListener {
+                            val request = StringRequest(
+                                Request.Method.GET, "http://10.0.2.2:8080/next",
+                                Response.Listener<String> {
+                                },
+                                Response.ErrorListener {
+                                    //use the porvided VolleyError to display
+                                    //an error message
+                                    Log.e("ERROR", it.message!! )
+                                })
+                            requestQueue.add(request)
                             findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
                         }
                         buttonExit.setOnClickListener {
