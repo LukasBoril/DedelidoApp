@@ -3,7 +3,6 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="about">About</string>
     <string name="previous">Previous</string>
     <string name="next">Start</string>
@@ -60,4 +59,12 @@
     <string name="text_about_f9">Jeder der Spieler bekommt gleichmäßig viele Karten auf die Hand. Diese müssen so schnell wie möglich abgelegt werden. Sieger des Spiels ist, wer als erstes alle Karten abgelegt hat. Dabei müssen beim Ablegen bestimmte Regeln befolgt werden. Dazu gehört, dass binnen drei Sekunden eine Aussage zu in den Ablagestapeln offen sichtbaren Karten getroffen werden muss. Ist diese Aussage falsch oder wird zu langsam getätigt, müssen Karten auf die Hand genommen werden, womit das Ziel als Erstes alle Karten abgelegt zu haben selbstverständlich verzögert wird.</string>
 
     <string name="text_instruction_f9">Das Spiel beihnahltet 25 verschiedene Karten: 5 tiere in je 5 verschiednene Farben. In der Mitte der Spieler werden drei Ablagestapel gebildet.</string>
+
+    <!-- Strings used for second fragment -->
+    <string name="text_turn_phone1_f2">TURN YOUR PHONE TO LANDSCAPE</string>
+    <string name="text_turn_phone2_f2">TURN YOUR PHONE TO LANDSCAPE</string>
+    <string name="second_fragment_label">Get ready for the Game!</string>
+    <string name="button_start_f2">Ready!</string>
+
+
 </resources>
