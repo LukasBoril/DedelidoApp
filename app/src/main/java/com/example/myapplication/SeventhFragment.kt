@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
@@ -18,7 +20,11 @@ import com.example.myapplication.databinding.FragmentSeventhBinding
 
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] subclass as the destination before leaving the game.
+ * The highscore of the current game is displayed in a listview.
+ * The screen is fixed to landscape orientation for this fragment.
+ * author: Nadine Duss
+ * version: 26.06.2021
  */
 class SeventhFragment : Fragment() {
 
@@ -48,9 +54,6 @@ class SeventhFragment : Fragment() {
         the name and the healthpoints are then bound to the Listview
          */
         val winnerBind = binding.textWinnerF7
-       // binding.textWinnerF7.text = allPlayers?.mostHealthpoint()?.name? : "-"
-
-        //binding.textEnoughF7.text = "Already enough of Dodelido?"  //how do I do that shows value form strings.xml?
 
 
 
@@ -97,8 +100,6 @@ class SeventhFragment : Fragment() {
 
         binding.buttonExitF7.setOnClickListener {
             findNavController().navigate(com.example.myapplication.R.id.action_seventhFragment_to_FirstFragment)
-            // findNavController().navigate(R.id.action_seventhFragment_to_FirstFragment)
-            //wieso funktioniert nicht?
         }
 
 
@@ -108,7 +109,13 @@ class SeventhFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    fun deadPlayer() {}
+
+/*
+* Method to request a list of all players of the current game from the backend.
+* The winner is evaluated and displayed in a separate textView.
+* all other players' name and score is displayed as a listView.
+* return: a Volley StringRequest
+ */
     fun getAllPlayers() : StringRequest {
         //var players : MutableList<CurrentPlayer>? = null
           //  var dead = false
@@ -128,7 +135,7 @@ class SeventhFragment : Fragment() {
                 allPlayers.addAll(players!!)
                 adapter?.notifyDataSetChanged()
 
-                val textPLayer = binding.textPlayerF7
+                //val textPLayer = binding.textPlayerF7
                 //binding.textPlayerF7.text = "Player:"
 
                 //binding.listViewF7.addHeaderView(textPLayer)
@@ -150,7 +157,8 @@ class SeventhFragment : Fragment() {
                 }
 
  */
-
+// evaluate the winner. If players have an identical score, the first player
+// encountered will be displayed.
                 var tempHP = 0
                 var winner : CurrentPlayer? = null
                 for (player in players) {

@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
@@ -22,7 +24,11 @@ import kotlin.concurrent.schedule
 class MyInt (var i : Int) {fun getInt(): Int {return i}}
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] subclass as the landing destination in the navigation after a mistake was
+ * was made and the "Wrong" button was pressed.
+ *  The screen is fixed to landscape orientation for this fragment.
+ * Author: Nadine Duss
+ * Version: 28.06.2021
  */
 class SixthFragment : Fragment() {
 
@@ -31,10 +37,10 @@ class SixthFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private var currentPlayer : CurrentPlayer? = null
-    // private var currentPlayerAlive : Boolean = true
-    private var adapter: F7PlayerScoreAdapter? = null
-    private var allPlayers = mutableListOf<CurrentPlayer>()
+    private var currentPlayer: CurrentPlayer? = null
+
+    //private var adapter: F7PlayerScoreAdapter? = null
+    //  private var allPlayers = mutableListOf<CurrentPlayer>()
 
 
     override fun onCreateView(
@@ -45,24 +51,27 @@ class SixthFragment : Fragment() {
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         _binding = FragmentSixthBinding.inflate(inflater, container, false)
 
-
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //get player
+
+
+        // Request current player from the background and display his name.
+        // The current Player conducted the mistake.
 
         var displayCurrentPlayer = binding.textViewF6
 
         val requestQueue = Volley.newRequestQueue(requireContext())
-
-        requestQueue.add(getCurrentPlayer(displayCurrentPlayer))
+        // requestQueue.add(getCurrentPlayer(displayCurrentPlayer))
 
         val buttonContinue = binding.buttonContinueF6
         val buttonExit = binding.buttonExitF6
+
+        buttonExit.setEnabled(false)
+        buttonContinue.setEnbled(false)
 
         val url = "http://10.0.2.2:8080/whosturn/"
 
@@ -71,14 +80,24 @@ class SixthFragment : Fragment() {
             Response.Listener<String> { response ->
                 val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
 
-                if (tempcurrentPlayer != null)
-                {
+                if (tempcurrentPlayer != null) {
+                    //display name of current player
+                    val displayText =
+                        tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
+                    displayCurrentPlayer.text = displayText
+                    currentPlayer = tempcurrentPlayer //doe3sn't work!!!
+
+                    //evaluate healthpoints of current player. Is he still alive?
+                    //alive: enbale buttons continue and exit
+                    // dead: transit automatically to fragment 8
                     val hp = tempcurrentPlayer.getPlayerHealthPoints()
                     if (hp < 1) {
                         Timer().schedule(2000) {
-                            view?.post {findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)} }
-                    }
-                    else { 
+                            view?.post { findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment) }
+                        }
+                    } else {
+                        buttonExit.setEnabled(true)
+                        buttonContinue.setEnabled(true)
                         buttonContinue.setOnClickListener {
                             val request = StringRequest(
                                 Request.Method.GET, "http://10.0.2.2:8080/next",
@@ -87,13 +106,13 @@ class SixthFragment : Fragment() {
                                 Response.ErrorListener {
                                     //use the porvided VolleyError to display
                                     //an error message
-                                    Log.e("ERROR", it.message!! )
+                                    Log.e("ERROR", it.message!!)
                                 })
                             requestQueue.add(request)
                             findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
                         }
                         buttonExit.setOnClickListener {
-                            view?.post {findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)}
+                            view?.post { findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment) }
 
                         }
 
@@ -104,96 +123,15 @@ class SixthFragment : Fragment() {
                 //use the porvided VolleyError to display
                 //an error message
                 Log.e("ERROR", it.message!!)
+                print("request \"whosturn\" to the backend failed.")
             })
 
         requestQueue.add(request)
 
 
-
-
-
         //Timer().schedule(2000) {
-           // var hp = currentPlayer!!.getPlayerHealthPoints()
+        // var hp = currentPlayer!!.getPlayerHealthPoints()
 
-// Trial to use Data from adapter -> all return null!
-        /*
-
-        var currenPlaya = adapter?.getPlayerOnTurn()
-            if (currenPlaya != null && currenPlaya!!.getPlayerHealthPoints() > 0) {
-                binding.buttonContinueF6.setOnClickListener {
-                    findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
-                }
-                binding.buttonExitF6.setOnClickListener {
-                    findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
-                }
-            }
-            else {
-                findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
-            }
-
-         */
-        //}
-
-
-        // Trial wih separate new alive request to backend
-            /*
-            Timer().schedule(2000) {
-                val url = "http://10.0.2.2:8080/alive"
-                val request = StringRequest(
-                    Request.Method.GET, url,
-                    Response.Listener<String> { response ->
-                        //val currentPlayerAlive = Klaxon().parse<Integer>(response)
-                        //binding.textViewF6.text = currentPlayerAlive.toString()
-                        val currentPlayerAlive = Klaxon().parse<MyInt>(response)
-                        //binding.textViewF6.text = currentPlayerAlive.toString()
-
-
-                        if (currentPlayerAlive != null) {
-
-
-                            if (currentPlayerAlive.getInt() == 0) {
-                                //fragment 8
-                                findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
-                            } else {
-                                binding.buttonContinueF6.setOnClickListener {
-                                    findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
-                                }
-                                binding.buttonExitF6.setOnClickListener {
-                                    findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
-                                }
-                            }
-
-
-                        }
-
-
-                    },
-
-                    Response.ErrorListener {
-                        //use the porvided VolleyError to display
-                        //an error message
-                        Log.e("ERROR", it.message!!)
-                    })
-
-                requestQueue.add(request)
-            }
-
-    */
-
-
-//
-//        if (!currentPlayerAlive) {
-//           //fragment 8
-//            findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment)
-//        }
-//        else {
-//            binding.buttonContinueF6.setOnClickListener {
-//                findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
-//            }
-//            binding.buttonExitF6.setOnClickListener {
-//                findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment)
-//            }
-//        }
 
     }
 
@@ -201,7 +139,8 @@ class SixthFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
+}
+/*
     fun getCurrentPlayer(displayTextView : TextView) : StringRequest {
         val url = "http://10.0.2.2:8080/whosturn/"
 
@@ -225,7 +164,9 @@ class SixthFragment : Fragment() {
                 Log.e("ERROR", it.message!!)
             })
         return request
-    }
+
+ */
+
 //
 //    fun checkPlayerAlive() {
 //        val url = "http://10.0.2.2:8080/alive"
@@ -276,10 +217,6 @@ class SixthFragment : Fragment() {
 //
 //    }
 
-    fun nextTrial() {
 
-
-    }
-}
 
 // view?.post { findNavController.....}

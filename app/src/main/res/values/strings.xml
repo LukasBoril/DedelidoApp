@@ -39,7 +39,7 @@
     <string name="button_exit">Exit</string>
 
     <!-- Strings used for seventh fragment -->
-    <string name="seventh_fragment_label">Leave Game</string>
+    <string name="seventh_fragment_label">Leave Current Game</string>
     <string name="button_exit_f7">Exit</string>
     <string name="text_enough_f7">Already enough of Dodelido?</string>
     <string name="text_player_f7">Player</string>
