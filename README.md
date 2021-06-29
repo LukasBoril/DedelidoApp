@@ -13,7 +13,7 @@ suggestions for improvement we are very happy to hear from you by mail or pull r
 
 ## Installation
 
-The source code for the frontend [Kotlin] (https://github.zhaw.ch/dussnad1/group4-Dodelido-Frontend/) and the backend [Java] (https://github.zhaw.ch/dussnad1/group4-Dodelido-Backend) is available on Git.
+The source code for the frontend [Kotlin](https://github.zhaw.ch/dussnad1/group4-Dodelido-Frontend/) and the backend [Java](https://github.zhaw.ch/dussnad1/group4-Dodelido-Backend) is available on Git.
 
 ## Usage
 
@@ -30,6 +30,7 @@ seconds to press the wrong button (0 to -5 on the timer). When the wrong button 
 the player who made the mistake will lose valuable health points. The longer no mistake was made the more points he will lose!
 One additional twist: as tortoises are slow animals, you have to add a "ehm" before the answer for each visible tortoise (e.g. ehm blue).
 The solution for the depicted case is "Penguin!".
+
 ![](readme/Dodelido.png)
 
 ## Contributing
