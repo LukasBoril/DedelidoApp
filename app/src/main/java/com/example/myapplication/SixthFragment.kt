@@ -71,7 +71,7 @@ class SixthFragment : Fragment() {
         val buttonExit = binding.buttonExitF6
 
         buttonExit.setEnabled(false)
-        buttonContinue.setEnbled(false)
+        buttonContinue.setEnabled(false)
 
         val url = "http://10.0.2.2:8080/whosturn/"
 
