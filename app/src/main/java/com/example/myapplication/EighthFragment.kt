@@ -59,39 +59,32 @@ class EighthFragment : Fragment() {
         adapter = F7PlayerScoreAdapter(allPlayers, requireContext())
         binding.listViewF8.adapter = adapter
 
-// trial 1
-        //requestQueue.add(showDeadPlayer())
-
-
-        //trial 2 using the list from the adapter -> does not work
-        /*
-        var deadPlaya = adapter!!.getPlayerOnTurn()
-        if (deadPlaya != null) {
-
-            val displayText = "Game over! " + deadPlaya!!.getPlayerName() + " just died..."
-            binding.textDeadF8.text = displayText
-        }
-
-        /*
-        as we already have updated the adapter list, we use it to determine the player with the most remaining healthpoints
-         */
-        var winner = adapter!!.mostHealthpoint()
-        if (winner != null) {
-            var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
-            binding.textWinnerF8.text = displayTextWinner
-        }
-
-*/
-
         binding.buttonExitF8.setOnClickListener {
             findNavController().navigate(R.id.action_eighthFragment_to_FirstFragment)
+
+            // clear request here!!!!!!!
+
+            //request to the backend ro reset the counter to 1 and the players to null/delete
+            //to be ready for a new game
+
+            val url = "http://10.0.2.2:8080/clear/"
+            val resetRequest = StringRequest(
+                Request.Method.GET, url,
+                Response.Listener<String> {},
+
+                Response.ErrorListener {
+                    //use the porvided VolleyError to display
+                    //an error message
+                    Log.e("ERROR", it.message!!)
+                })
+            requestQueue.add(resetRequest)
         }
 
         // request and then display the current player on the move, as he is the one that just died.
 
         val url = "http://10.0.2.2:8080/whosturn/"
 
-        val request = StringRequest(
+        val playerRequest = StringRequest(
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
@@ -99,7 +92,6 @@ class EighthFragment : Fragment() {
                 {
                     val displayText = tempcurrentPlayer.getPlayerName() + " just died!"
                     binding.textDeadF8.text = displayText
-
                 }
             },
 
@@ -108,13 +100,7 @@ class EighthFragment : Fragment() {
                 //an error message
                 Log.e("ERROR", it.message!!)
             })
-        requestQueue.add(request)
-
-
-
-
-
-
+        requestQueue.add(playerRequest)
     }
 
     override fun onDestroyView() {
@@ -127,9 +113,7 @@ class EighthFragment : Fragment() {
 
         val url = "http://10.0.2.2:8080/players/"
 
-
         //define a request.
-
         val request = StringRequest(
             Request.Method.GET, url,
             Response.Listener<String> { response ->
@@ -157,8 +141,6 @@ class EighthFragment : Fragment() {
 
         return request
     }
-
-
 }
 
 

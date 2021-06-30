@@ -53,9 +53,7 @@ class SeventhFragment : Fragment() {
         get a list of all current players from the backend, including their name and healthpoints
         the name and the healthpoints are then bound to the Listview
          */
-        val winnerBind = binding.textWinnerF7
-
-
+        //val winnerBind = binding.textWinnerF7
 
         val requestQueue = Volley.newRequestQueue(requireContext())
         requestQueue.add(getAllPlayers())
@@ -63,46 +61,27 @@ class SeventhFragment : Fragment() {
         adapter = F7PlayerScoreAdapter(allPlayers, requireContext())
         binding.listViewF7.adapter = adapter
 
-        /*
-        val textPLayer = binding.textPlayerF7
-        binding.textPlayerF7.text = "Player:"
-        binding.listViewF7.addHeaderView(textPLayer)
-        */
-        //val textHP = binding.textHealthpointsF7
-        //binding.listViewF7.addHeaderView(textHP)
-        //val inflater = layoutInflater
-       // val header = inflater.inflate(R.layout.header, listViewF7, false) as ViewGroup
-        //listViewF7.addHeaderView(header, null, false)
-
-
-        //this part not added as unclear how and if needed
-        //this.setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,names));
-
-
-        //
-
-        /*
-        as we already have updated the adapter list, we use it to determine the player with the most remaining healthpoints
-         */
-/*
-        var winner = adapter!!.mostHealthpoint()
-        if (winner != null) {
-            var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
-            //binding.textWinnerF7.text = displayTextWinner
-            winnerBind.text = displayTextWinner
-        }
-
- */
-
-
-
-
-
         binding.buttonExitF7.setOnClickListener {
             findNavController().navigate(com.example.myapplication.R.id.action_seventhFragment_to_FirstFragment)
+
+
+            // clear request here!!!!!!!
+
+            //request to the backend ro reset the counter to 1 and the players to null/delete
+            //to be ready for a new game
+
+            val url = "http://10.0.2.2:8080/clear/"
+            val request = StringRequest(
+                Request.Method.GET, url,
+                Response.Listener<String> {},
+
+                Response.ErrorListener {
+                    //use the porvided VolleyError to display
+                    //an error message
+                    Log.e("ERROR", it.message!!)
+                })
+            requestQueue.add(request)
         }
-
-
     }
 
     override fun onDestroyView() {
@@ -129,36 +108,11 @@ class SeventhFragment : Fragment() {
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
-//Klaxon().parse<MutableList<CurrentPlayer>>(response)
-
-
                 allPlayers.addAll(players!!)
                 adapter?.notifyDataSetChanged()
 
-                //val textPLayer = binding.textPlayerF7
-                //binding.textPlayerF7.text = "Player:"
-
-                //binding.listViewF7.addHeaderView(textPLayer)
-
-                //val board = Klaxon().parse<Stationboard>(response)
-                //stationboardF.addAll(board!!.stationboard)
-                //adapter?.notifyDataSetChanged()
-/*
-                if (players != null) {
-                    for (player in players) {
-                        var temp = player.getPlayerHealthPoints()
-                        if (temp >= 0) {
-                            dead = true
-                        }
-                        if (dead) {
-                            deadPlayer = player
-                        }
-                    }
-                }
-
- */
-// evaluate the winner. If players have an identical score, the first player
-// encountered will be displayed.
+                // evaluate the winner. If players have an identical score, the first player
+                // encountered will be displayed.
                 var tempHP = 0
                 var winner : CurrentPlayer? = null
                 for (player in players) {
@@ -181,34 +135,6 @@ class SeventhFragment : Fragment() {
                 Log.e("ERROR", it.message!!)
             })
 
-           //requestQueue.add(request)
-/*
-            if (players != null) {
-                for (player in players!!) {
-                var temp = player.getPlayerHealthPoints()
-                if (temp >= 0) {
-                dead = true
-                 }
-                    if (dead) {
-                     deadPlayer = player
-                      }
-                }
-            }
-        return deadPlayer
-
- */
         return request
     }
-
-
 }
-
-
-/*
-    fun callFromOtherFragment() {
-        val fm: FragmentManager? = fragmentManager
-        val fragm: SixthFragment = fm?.findFragmentById(R.id.sixth_frag_tag) as SixthFragment
-        fragm.getCurrentPlayer()
-    }
-
- */

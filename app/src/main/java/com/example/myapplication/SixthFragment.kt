@@ -50,7 +50,7 @@ class SixthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // prepare the bindinig for the text and button components
-        var displayCurrentPlayer = binding.textViewF6
+       // var displayCurrentPlayer = binding.textViewF6
         val buttonContinue = binding.buttonContinueF6
         val buttonExit = binding.buttonExitF6
 
@@ -71,7 +71,8 @@ class SixthFragment : Fragment() {
                     //display name of current player
                     val displayText =
                         tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
-                    displayCurrentPlayer.text = displayText
+                    //displayCurrentPlayer.text = displayText
+                    binding.textViewF6.text = displayText
                     currentPlayer = tempcurrentPlayer //doe3sn't work!!!
 
                     //evaluate healthpoints of current player. Is he still alive?
