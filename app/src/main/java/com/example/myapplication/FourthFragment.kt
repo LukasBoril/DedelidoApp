@@ -10,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -81,7 +78,7 @@ class FourthFragment : Fragment() {
                 model.name.value = nextPlayer?.getPlayerName()
             },
             Response.ErrorListener {
-                //use the porvided VolleyError to display
+                //use the provided VolleyError to display
                 //an error message
                 Log.e("ERROR", it.message!! )
             })
@@ -98,7 +95,7 @@ class FourthFragment : Fragment() {
             // once it's done, navigate to fragment 5
             override fun onFinish() {
                 timePassed= 0
-                view?.post {
+                view.post {
                     findNavController().navigate(R.id.action_FourthFragment_to_fifthFragment)
                 }
             }

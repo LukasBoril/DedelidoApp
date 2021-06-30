@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 /**
- * View model for the current player
+ * View model for the current player display.
+ * Only the name of the player is displayed
  *
  * @author Lukas Boril
  * @version 2021.06.25
