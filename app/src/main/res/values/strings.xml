@@ -2,11 +2,20 @@
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="about">About</string>
     <string name="previous">Previous</string>
     <string name="next">Start</string>
+    <!-- Strings used for first fragmnet -->
+    <string name="first_fragment_label">Dodelido Game</string>
+    <string name="welcome_text">Welcome to Dodelido!</string>
+    <string name="about">About</string>
+
+    <!-- Strings used for second fragment -->
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <!-- Strings used for third fragment -->
+    <string name="third_fragment_label">New Game</string>
+    <string name="register_text">Please register players</string>
+
 
 
     <!-- Strings used for fourth fragment -->
