@@ -4,15 +4,13 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
@@ -48,7 +46,7 @@ class FourthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Set view to landscape
-        getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         // Binding of the button. This will abort the current game
         binding.f4ButtonBackToMain.setOnClickListener {
@@ -57,14 +55,14 @@ class FourthFragment : Fragment() {
 
         // Binding of the text field for the timer and linking it to the CountDownViewModel
         val modelTime: CountDownViewModel by activityViewModels()
-        modelTime.leftOverTime.observe(viewLifecycleOwner, Observer<Int> { newVal ->
+        modelTime.leftOverTime.observe(viewLifecycleOwner, { newVal ->
             // update UI
             binding.f4TextView3.text = newVal.toString()
         })
 
         // Binding of the text field for the current player and linking it to the CurrentPlayerViewModel
         val model: CurrentPlayerViewModel by activityViewModels()
-        model.name.observe(viewLifecycleOwner, Observer<String>{newVal ->
+        model.name.observe(viewLifecycleOwner, { newVal ->
             // update UI
             binding.f4TextView2.text = newVal
         })
@@ -73,11 +71,11 @@ class FourthFragment : Fragment() {
         val requestQueue = Volley.newRequestQueue(requireContext())
         val request2 = StringRequest(
             Request.Method.GET, "http://10.0.2.2:8080/whosturn",
-            Response.Listener<String> { response ->
+            { response ->
                 val nextPlayer = Klaxon().parse<CurrentPlayer>(response)
                 model.name.value = nextPlayer?.getPlayerName()
             },
-            Response.ErrorListener {
+            {
                 //use the provided VolleyError to display
                 //an error message
                 Log.e("ERROR", it.message!! )
