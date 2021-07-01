@@ -60,13 +60,9 @@ class EighthFragment : Fragment() {
         binding.listViewF8.adapter = adapter
 
         binding.buttonExitF8.setOnClickListener {
-            findNavController().navigate(R.id.action_eighthFragment_to_FirstFragment)
-
-            // clear request here!!!!!!!
 
             //request to the backend ro reset the counter to 1 and the players to null/delete
             //to be ready for a new game
-
             val url = "http://10.0.2.2:8080/clear/"
             val resetRequest = StringRequest(
                 Request.Method.GET, url,
@@ -78,6 +74,7 @@ class EighthFragment : Fragment() {
                     Log.e("ERROR", it.message!!)
                 })
             requestQueue.add(resetRequest)
+            findNavController().navigate(R.id.action_eighthFragment_to_FirstFragment)
         }
 
         // request and then display the current player on the move, as he is the one that just died.

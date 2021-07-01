@@ -62,14 +62,8 @@ class SeventhFragment : Fragment() {
         binding.listViewF7.adapter = adapter
 
         binding.buttonExitF7.setOnClickListener {
-            findNavController().navigate(com.example.myapplication.R.id.action_seventhFragment_to_FirstFragment)
-
-
-            // clear request here!!!!!!!
-
             //request to the backend ro reset the counter to 1 and the players to null/delete
             //to be ready for a new game
-
             val url = "http://10.0.2.2:8080/clear/"
             val request = StringRequest(
                 Request.Method.GET, url,
@@ -81,6 +75,7 @@ class SeventhFragment : Fragment() {
                     Log.e("ERROR", it.message!!)
                 })
             requestQueue.add(request)
+            findNavController().navigate(com.example.myapplication.R.id.action_seventhFragment_to_FirstFragment)
         }
     }
 
@@ -89,16 +84,16 @@ class SeventhFragment : Fragment() {
         _binding = null
     }
 
-/*
-* Method to request a list of all players of the current game from the backend.
-* The winner is evaluated and displayed in a separate textView.
-* all other players' name and score is displayed as a listView.
-* return: a Volley StringRequest
- */
-    fun getAllPlayers() : StringRequest {
+    /*
+    * Method to request a list of all players of the current game from the backend.
+    * The winner is evaluated and displayed in a separate textView.
+    * all other players' name and score is displayed as a listView.
+    * return: a Volley StringRequest
+     */
+    fun getAllPlayers(): StringRequest {
         //var players : MutableList<CurrentPlayer>? = null
-          //  var dead = false
-      //  var deadPlayer : CurrentPlayer? = null
+        //  var dead = false
+        //  var deadPlayer : CurrentPlayer? = null
         val url = "http://10.0.2.2:8080/players/"
 
 
@@ -107,14 +102,14 @@ class SeventhFragment : Fragment() {
         val request = StringRequest(
             Request.Method.GET, url,
             Response.Listener<String> { response ->
-               var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
+                var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
                 allPlayers.addAll(players!!)
                 adapter?.notifyDataSetChanged()
 
                 // evaluate the winner. If players have an identical score, the first player
                 // encountered will be displayed.
                 var tempHP = 0
-                var winner : CurrentPlayer? = null
+                var winner: CurrentPlayer? = null
                 for (player in players) {
                     if (player.getPlayerHealthPoints() > tempHP) {
                         winner = player
@@ -123,7 +118,8 @@ class SeventhFragment : Fragment() {
                 }
 
                 if (winner != null) {
-                    var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
+                    var displayTextWinner =
+                        winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
                     //binding.textWinnerF7.text = displayTextWinner
                     binding.textWinnerF7.text = displayTextWinner
                 }
