@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
 import com.example.myapplication.databinding.FragmentThirdBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlin.collections.HashMap
 import kotlin.collections.Map
 import kotlin.collections.MutableMap
@@ -34,7 +36,11 @@ class ThirdFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    //playerlist for ListView in Fragment
     private var playerList = mutableListOf<CurrentPlayer>()
+
+    //Adapter for ListView
     private var adapter: PlayerAdapter? = null
 
 
@@ -51,8 +57,17 @@ class ThirdFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        // make sure that the playerlist is cleared so that a new list with new players can be created
+        clearPlayerList()
+
+
+        // Set view to portrait
+        getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         super.onViewCreated(view, savedInstanceState)
         val requestQueue = Volley.newRequestQueue(requireContext())
+
         //  val adapter : ArrayAdapter<CurrentPlayer> = ArrayAdapter<CurrentPlayer>(requireContext(), android.R.layout.simple_list_item_1, android.R.id.text1, playerList);
         adapter = PlayerAdapter(playerList, requireContext())
         binding.listPlayersF3.adapter = adapter
@@ -91,30 +106,49 @@ class ThirdFragment : Fragment() {
         }
 
         binding.buttonStartgameF3.setOnClickListener {
-            val getRequest = StringRequest(
-                Request.Method.GET, "http://10.0.2.2:8080/start/",
-                Response.Listener<String> {
+            //first checks if player is registered, then game will starts
+            if (playerList.isNotEmpty()) {
+                val getRequest = StringRequest(
+                    Request.Method.GET, "http://10.0.2.2:8080/start/",
+                    Response.Listener<String> {
                         // response ->
-                    // var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
-                    // playerList.addAll(players!!)
-                    // adapter?.notifyDataSetChanged()
+                        // var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
+                        // playerList.addAll(players!!)
+                        // adapter?.notifyDataSetChanged()
 
-                },
-                Response.ErrorListener {
-                    //use the porvided VolleyError to display
-                    //an error message
-                    Log.e("ERROR", it.message!!)
-                })
-            requestQueue.add(getRequest)
-            view?.post {
-                findNavController().navigate(R.id.action_ThirdFragment_to_FourthFragment)
+                    },
+                    Response.ErrorListener {
+                        //use the porvided VolleyError to display
+                        //an error message
+                        Log.e("ERROR", it.message!!)
+                    })
+                requestQueue.add(getRequest)
+                view?.post {
+                    findNavController().navigate(R.id.action_ThirdFragment_to_FourthFragment)
+                }
+                //otherwise a message appears
+            } else {
+                Snackbar.make(
+                    view,
+                    "No player registered. Please register player first!",
+                    Snackbar.LENGTH_LONG
+                ).setAction("Action", null).show()
             }
-        }
 
+        }
 
         fun onDestroyView() {
             super.onDestroyView()
             _binding = null
+        }
+    }
+
+    /**
+     * Method to clear playerList
+     */
+    fun clearPlayerList() {
+        if (playerList.isNotEmpty()) {
+            playerList.clear()
         }
     }
 }
