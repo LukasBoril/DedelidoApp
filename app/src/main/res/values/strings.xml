@@ -2,15 +2,20 @@
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
+
     <string name="previous">Previous</string>
     <string name="next">Start</string>
     <!-- Strings used for first fragmnet -->
     <string name="first_fragment_label">Dodelido Game</string>
     <string name="welcome_text">Welcome to Dodelido!</string>
     <string name="about">About</string>
-
+  
     <!-- Strings used for second fragment -->
-    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="text_turn_phone1_f2">TURN YOUR PHONE TO LANDSCAPE</string>
+    <string name="text_turn_phone2_f2">TURN YOUR PHONE TO LANDSCAPE</string>
+    <string name="second_fragment_label">Get ready for the Game!</string>
+    <string name="button_start_f2">Ready!</string>
 
     <!-- Strings used for third fragment -->
     <string name="third_fragment_label">New Game</string>
@@ -19,24 +24,15 @@
 
 
     <!-- Strings used for fourth fragment -->
-
     <string name="fourth_fragment_label">Get Ready for next turn</string>
-
     <string name="back_To_Main">End current Game</string>
-
     <string name="title_next_player">The next player will be:</string>
 
 
 
     <!-- Strings used for fifth fragment -->
-
     <string name="fifth_fragment_label">DoDeLiDo</string>
-
     <string name="wrong">WRONG   !!!</string>
-
-
-
-
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -48,7 +44,7 @@
     <string name="button_exit">Exit</string>
 
     <!-- Strings used for seventh fragment -->
-    <string name="seventh_fragment_label">Leave Game</string>
+    <string name="seventh_fragment_label">Leave Current Game</string>
     <string name="button_exit_f7">Exit</string>
     <string name="text_enough_f7">Already enough of Dodelido?</string>
     <string name="text_player_f7">Player</string>
@@ -66,7 +62,9 @@
     <string name="button_exit_f9">Exit</string>
     <string name="title_about_f9">Das Ziel von Dodelido</string>
     <string name="title_instruction_f9">Playing instructions</string>
-    <string name="text_about_f9">Jeder der Spieler bekommt gleichmäßig viele Karten auf die Hand. Diese müssen so schnell wie möglich abgelegt werden. Sieger des Spiels ist, wer als erstes alle Karten abgelegt hat. Dabei müssen beim Ablegen bestimmte Regeln befolgt werden. Dazu gehört, dass binnen drei Sekunden eine Aussage zu in den Ablagestapeln offen sichtbaren Karten getroffen werden muss. Ist diese Aussage falsch oder wird zu langsam getätigt, müssen Karten auf die Hand genommen werden, womit das Ziel als Erstes alle Karten abgelegt zu haben selbstverständlich verzögert wird.</string>
-
+    <string name="text_about_f9">Try to survive as many rounds as possible by giving fast and correct answers. If your response is wrong or you hesitated, you lose valuable health points. And the more turns without a mistake the more points you will lose upon a mistake!</string>
     <string name="text_instruction_f9">Das Spiel beihnahltet 25 verschiedene Karten: 5 tiere in je 5 verschiednene Farben. In der Mitte der Spieler werden drei Ablagestapel gebildet.</string>
+
+
+
 </resources>

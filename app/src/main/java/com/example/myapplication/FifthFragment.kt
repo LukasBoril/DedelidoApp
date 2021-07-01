@@ -4,25 +4,20 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
 import com.example.myapplication.databinding.FragmentFifthBinding
-import kotlinx.coroutines.delay
+import java.util.*
+import kotlin.collections.ArrayList
 
-class MyString(val str : String) {
-
-}
 
 /**
  * Fifth fragment class
@@ -55,11 +50,11 @@ class FifthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Set view to landscape
-        getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         // link the timer CountDownViewModel to the textView
         val modelTime: CountDownViewModel by activityViewModels()
-        modelTime.leftOverTime.observe(viewLifecycleOwner, Observer<Int> { newVal ->
+        modelTime.leftOverTime.observe(viewLifecycleOwner, { newVal ->
             // update UI
             binding.f5TimerTextView.text = newVal.toString()
         })
@@ -72,17 +67,17 @@ class FifthFragment : Fragment() {
                 timePassed++
             }
 
-            // once it's done, inform the backend that no mistake was made and that it's the next plaxers turn
+            // once it's done, inform the backend that no mistake was made and that it's the next players turn
             override fun onFinish() {
                 timePassed= 0
                 val requestQueue = Volley.newRequestQueue(requireContext())
 
                 var request = StringRequest(
                     Request.Method.PUT, "http://10.0.2.2:8080/roundCounter",
-                    Response.Listener<String> {
+                    {
                     },
-                    Response.ErrorListener {
-                        //use the porvided VolleyError to display
+                    {
+                        //use the provided VolleyError to display
                         //an error message
                         Log.e("ERROR", it.message!! )
                     })
@@ -90,17 +85,17 @@ class FifthFragment : Fragment() {
 
                 request = StringRequest(
                     Request.Method.GET, "http://10.0.2.2:8080/next",
-                    Response.Listener<String> {
+                    {
                     },
-                    Response.ErrorListener {
-                        //use the porvided VolleyError to display
+                    {
+                        //use the provided VolleyError to display
                         //an error message
                         Log.e("ERROR", it.message!! )
                     })
                 requestQueue.add(request)
 
                 // navigate back to next-player fragment
-                view?.post {
+                view.post {
                     findNavController().navigate(R.id.action_fifthFragment_to_FourthFragment)
                 }
             }
@@ -114,49 +109,48 @@ class FifthFragment : Fragment() {
             val requestQueue = Volley.newRequestQueue(requireContext())
             val request = StringRequest(
                 Request.Method.GET, "http://10.0.2.2:8080/fail",
-                Response.Listener<String> {
+                {
                 },
-                Response.ErrorListener {
-                    //use the porvided VolleyError to display
+                {
+                    //use the provided VolleyError to display
                     //an error message
                     Log.e("ERROR", it.message!! )
                 })
             requestQueue.add(request)
             timer.cancel()
-            view?.post {
+            view.post {
                 findNavController().navigate(R.id.action_fifthFragment_to_sixthFragment)
             }
         }
 
         // binding of textViews for cards
-        var viewCard1 = binding.f5ImageView
+        val viewCard1 = binding.f5ImageView
 
-        var viewCard2 = binding.f5ImageView2
+        val viewCard2 = binding.f5ImageView2
 
-        var viewCard3 = binding.f5ImageView3
+        val viewCard3 = binding.f5ImageView3
 
         // getting new cards and displaying them in ImageView 0 to 2
+        val urlRoot = "com.example.myapplication:drawable/"
         val requestQueue = Volley.newRequestQueue(requireContext())
         val request = StringRequest(
             Request.Method.GET, "http://10.0.2.2:8080/openCards",
-            Response.Listener<String> { response ->
+            { response ->
                 val allOpenCards = ArrayList(Klaxon().parseArray<Card>(response))
-                if (allOpenCards != null) {
-                    var addressFirstCard = produceCardAccessString(allOpenCards.get(0))
-                    var id = resources.getIdentifier("com.example.myapplication:drawable/" + addressFirstCard, null, null)
-                    viewCard1.setImageResource(id)
+                val addressFirstCard = produceCardAccessString(allOpenCards[0])
+                var id = resources.getIdentifier(urlRoot + addressFirstCard, null, null)
+                viewCard1.setImageResource(id)
 
-                    var addressSecondCard = produceCardAccessString(allOpenCards.get(1))
-                    id = resources.getIdentifier("com.example.myapplication:drawable/" + addressSecondCard, null, null)
-                    viewCard2.setImageResource(id)
+                val addressSecondCard = produceCardAccessString(allOpenCards[1])
+                id = resources.getIdentifier(urlRoot + addressSecondCard, null, null)
+                viewCard2.setImageResource(id)
 
-                    var addressThirdCard = produceCardAccessString(allOpenCards.get(2))
-                    id = resources.getIdentifier("com.example.myapplication:drawable/" + addressThirdCard, null, null)
-                    viewCard3.setImageResource(id)
-                }
+                val addressThirdCard = produceCardAccessString(allOpenCards[2])
+                id = resources.getIdentifier(urlRoot + addressThirdCard, null, null)
+                viewCard3.setImageResource(id)
             },
-            Response.ErrorListener {
-                //use the porvided VolleyError to display
+            {
+                //use the provided VolleyError to display
                 //an error message
                 Log.e("ERROR", it.message!! )
             })
@@ -168,12 +162,12 @@ class FifthFragment : Fragment() {
         _binding = null
     }
 
-    // funtion to produce strings used to access the drawable
-    fun produceCardAccessString(card : Card): String {
-        var cardColor = card.getCardColor()
-        var cardAnimal = card.getCardAnimal()
+    // function to produce strings used to access the drawable
+    private fun produceCardAccessString(card : Card): String {
+        val cardColor = card.getCardColor()
+        val cardAnimal = card.getCardAnimal()
         val output = cardAnimal + "_" + cardColor
-        return output.toLowerCase()
+        return output.lowercase(Locale.getDefault())
     }
 
 }

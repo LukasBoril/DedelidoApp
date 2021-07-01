@@ -112,6 +112,7 @@ class ThirdFragment : Fragment() {
                     Request.Method.GET, "http://10.0.2.2:8080/start/",
                     Response.Listener<String> {
                         // response ->
+
                         // var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
                         // playerList.addAll(players!!)
                         // adapter?.notifyDataSetChanged()
@@ -124,7 +125,7 @@ class ThirdFragment : Fragment() {
                     })
                 requestQueue.add(getRequest)
                 view?.post {
-                    findNavController().navigate(R.id.action_ThirdFragment_to_FourthFragment)
+                    findNavController().navigate(R.id.action_ThirdFragment_to_secondFragment)
                 }
                 //otherwise a message appears
             } else {
@@ -133,6 +134,8 @@ class ThirdFragment : Fragment() {
                     "No player registered. Please register player first!",
                     Snackbar.LENGTH_LONG
                 ).setAction("Action", null).show()
+
+
             }
 
         }

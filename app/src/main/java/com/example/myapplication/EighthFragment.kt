@@ -20,7 +20,11 @@ import com.example.myapplication.databinding.FragmentEighthBinding
 
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] subclass as the destination if a player has no
+ * healthpoints left after a mistake. The game is over as soon as the first player dies.
+ * The screen is fixed to landscape orientation for this fragment.
+ * author: Nadine Duss
+ * Version: 28.06.2021
  */
 class EighthFragment : Fragment() {
 
@@ -40,15 +44,14 @@ class EighthFragment : Fragment() {
         _binding = FragmentEighthBinding.inflate(inflater, container, false)
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         /*
-        get a list of all current players from the backend, including their name and healthpoints
-        the name and the healthpoints are then bound to the Listview
+        Get a list of all current players from the backend, including their name and healthpoints.
+        The name and the healthpoints are then bound to the Listview
          */
         val requestQueue = Volley.newRequestQueue(requireContext())
         requestQueue.add(getAllPlayers())
@@ -56,39 +59,29 @@ class EighthFragment : Fragment() {
         adapter = F7PlayerScoreAdapter(allPlayers, requireContext())
         binding.listViewF8.adapter = adapter
 
-// trial 1
-        //requestQueue.add(showDeadPlayer())
-
-
-        //trial 2 using the list from the adapter -> does not work
-        /*
-        var deadPlaya = adapter!!.getPlayerOnTurn()
-        if (deadPlaya != null) {
-
-            val displayText = "Game over! " + deadPlaya!!.getPlayerName() + " just died..."
-            binding.textDeadF8.text = displayText
-        }
-
-        /*
-        as we already have updated the adapter list, we use it to determine the player with the most remaining healthpoints
-         */
-        var winner = adapter!!.mostHealthpoint()
-        if (winner != null) {
-            var displayTextWinner = winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
-            binding.textWinnerF8.text = displayTextWinner
-        }
-
-*/
-
         binding.buttonExitF8.setOnClickListener {
+
+            //request to the backend ro reset the counter to 1 and the players to null/delete
+            //to be ready for a new game
+            val url = "http://10.0.2.2:8080/clear/"
+            val resetRequest = StringRequest(
+                Request.Method.GET, url,
+                Response.Listener<String> {},
+
+                Response.ErrorListener {
+                    //use the porvided VolleyError to display
+                    //an error message
+                    Log.e("ERROR", it.message!!)
+                })
+            requestQueue.add(resetRequest)
             findNavController().navigate(R.id.action_eighthFragment_to_FirstFragment)
         }
 
-        // trial 3: again direkt request
+        // request and then display the current player on the move, as he is the one that just died.
 
         val url = "http://10.0.2.2:8080/whosturn/"
 
-        val request = StringRequest(
+        val playerRequest = StringRequest(
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
@@ -96,7 +89,6 @@ class EighthFragment : Fragment() {
                 {
                     val displayText = tempcurrentPlayer.getPlayerName() + " just died!"
                     binding.textDeadF8.text = displayText
-
                 }
             },
 
@@ -105,13 +97,7 @@ class EighthFragment : Fragment() {
                 //an error message
                 Log.e("ERROR", it.message!!)
             })
-        requestQueue.add(request)
-
-
-
-
-
-
+        requestQueue.add(playerRequest)
     }
 
     override fun onDestroyView() {
@@ -119,41 +105,12 @@ class EighthFragment : Fragment() {
         _binding = null
     }
 
-   fun showDeadPlayer() : StringRequest {
-       val url = "http://10.0.2.2:8080/whosturn"
-
-       //define a request.
-
-       val request = StringRequest(
-           Request.Method.GET, url,
-           Response.Listener<String> { response ->
-               var deadPlayer = Klaxon().parse<CurrentPlayer>(response)
-
-               if (deadPlayer != null)
-               {
-                   val displayText = "Game over! " + deadPlayer.getPlayerName() + " just died..."
-                   binding.textDeadF8.text = displayText
-               }
-           },
-
-           Response.ErrorListener {
-               //use the porvided VolleyError to display
-               //an error message
-               Log.e("ERROR", it.message!!)
-           })
-
-       return request
-
-   }
-
 
     fun getAllPlayers() : StringRequest {
 
         val url = "http://10.0.2.2:8080/players/"
 
-
         //define a request.
-
         val request = StringRequest(
             Request.Method.GET, url,
             Response.Listener<String> { response ->
@@ -181,8 +138,6 @@ class EighthFragment : Fragment() {
 
         return request
     }
-
-
 }
 
 
