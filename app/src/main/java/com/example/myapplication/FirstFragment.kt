@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentFirstBinding
+import kotlin.system.exitProcess
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -36,14 +39,21 @@ class FirstFragment : Fragment() {
         // Set view to portrait
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Button to start the game, goes from first to third fragment
         binding.buttonStartgameF1.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_ThirdFragment)
         }
 
+        //Button to show about information, goes from first to ninth fragment
         binding.buttonAboutF1.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_ninthFragment)
         }
+        //Exit button to quit app
+        binding.buttonExitF1.setOnClickListener {
+            MainActivity().quitApp()
+        }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

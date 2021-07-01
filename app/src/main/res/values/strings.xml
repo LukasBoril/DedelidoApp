@@ -2,31 +2,37 @@
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="about">About</string>
+
     <string name="previous">Previous</string>
     <string name="next">Start</string>
+    <!-- Strings used for first fragmnet -->
+    <string name="first_fragment_label">Dodelido Game</string>
+    <string name="welcome_text">Welcome to Dodelido!</string>
+    <string name="about">About</string>
+  
+    <!-- Strings used for second fragment -->
+
+    <string name="text_turn_phone1_f2">TURN YOUR PHONE TO LANDSCAPE</string>
+    <string name="text_turn_phone2_f2">TURN YOUR PHONE TO LANDSCAPE</string>
+    <string name="second_fragment_label">Get ready for the Game!</string>
+    <string name="button_start_f2">Ready!</string>
+
+    <!-- Strings used for third fragment -->
+    <string name="third_fragment_label">New Game</string>
+    <string name="register_text">Please register players</string>
+
 
 
     <!-- Strings used for fourth fragment -->
-
     <string name="fourth_fragment_label">Get Ready for next turn</string>
-
     <string name="back_To_Main">End current Game</string>
-
     <string name="title_next_player">The next player will be:</string>
 
 
 
     <!-- Strings used for fifth fragment -->
-
     <string name="fifth_fragment_label">DoDeLiDo</string>
-
     <string name="wrong">WRONG   !!!</string>
-
-
-
-
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -59,11 +65,6 @@
     <string name="text_about_f9">Try to survive as many rounds as possible by giving fast and correct answers. If your response is wrong or you hesitated, you lose valuable health points. And the more turns without a mistake the more points you will lose upon a mistake!</string>
     <string name="text_instruction_f9">Das Spiel beihnahltet 25 verschiedene Karten: 5 tiere in je 5 verschiednene Farben. In der Mitte der Spieler werden drei Ablagestapel gebildet.</string>
 
-    <!-- Strings used for second fragment -->
-    <string name="text_turn_phone1_f2">TURN YOUR PHONE TO LANDSCAPE</string>
-    <string name="text_turn_phone2_f2">TURN YOUR PHONE TO LANDSCAPE</string>
-    <string name="second_fragment_label">Get ready for the Game!</string>
-    <string name="button_start_f2">Ready!</string>
 
 
 </resources>
