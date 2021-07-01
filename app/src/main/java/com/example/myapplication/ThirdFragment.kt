@@ -105,7 +105,8 @@ class ThirdFragment : Fragment() {
                 })
             requestQueue.add(getRequest)
             view?.post {
-                findNavController().navigate(R.id.action_ThirdFragment_to_FourthFragment)
+               // findNavController().navigate(R.id.action_ThirdFragment_to_FourthFragment)
+                findNavController().navigate(R.id.action_ThirdFragment_to_secondFragment)
             }
         }
 

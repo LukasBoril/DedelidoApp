@@ -7,9 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentSecondBinding
+import java.util.*
+import kotlin.concurrent.schedule
+
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] subclass that is depicted before the game starts in order
+ * to notify the players to rotate the screen to landsacpe mode.
+ * Author: Nadine Duss
+ * Version: 29.06.2021
  */
 class SecondFragment : Fragment() {
 
@@ -32,10 +38,12 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.buttonSecond.setOnClickListener {
-//            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-//        }
+        binding.buttonStartF2.setOnClickListener {
+             findNavController().navigate(R.id.action_secondFragment_to_FourthFragment)
+        }
+
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

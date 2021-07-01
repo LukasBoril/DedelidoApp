@@ -7,6 +7,14 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.myapplication.databinding.ScoreCellBinding
 
+/**
+* Adapter class that extends the [BaseAdapter]* in order to display a list of
+ * players with their name and score in a ListView.
+ * Author: Nadine Duss
+ * Version: 28.06.2021
+*/
+
+
 class F7PlayerScoreAdapter (
     var entries: MutableList<CurrentPlayer>,
     val context: Context
