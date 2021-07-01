@@ -57,6 +57,10 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+    /**
+     * Method to quit app and kill process
+     */
     fun quitApp() {
         this@MainActivity.finish()
         exitProcess(0)

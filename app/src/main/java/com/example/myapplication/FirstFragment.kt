@@ -39,20 +39,20 @@ class FirstFragment : Fragment() {
         // Set view to portrait
         getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Button to start the game, goes from first to third fragment
         binding.buttonStartgameF1.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_ThirdFragment)
         }
 
+        //Button to show about information, goes from first to ninth fragment
         binding.buttonAboutF1.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_ninthFragment)
         }
-        binding.buttonExitF1.setOnClickListener{
+        //Exit button to quit app
+        binding.buttonExitF1.setOnClickListener {
             MainActivity().quitApp()
         }
     }
-
-
-
 
 
     override fun onDestroyView() {
