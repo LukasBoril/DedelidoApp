@@ -13,7 +13,7 @@ suggestions for improvement we are very happy to hear from you by mail or pull r
 
 ## Installation
 
-The source code for the frontend [Kotlin](https://github.zhaw.ch/dussnad1/group4-Dodelido-Frontend/) and the backend [Java](https://github.zhaw.ch/dussnad1/group4-Dodelido-Backend) is available on Git.
+The source code for the frontend in [Kotlin](https://github.zhaw.ch/dussnad1/group4-Dodelido-Frontend/) and the backend in [Java](https://github.zhaw.ch/dussnad1/group4-Dodelido-Backend) is available on Git.
 
 ## Usage
 
