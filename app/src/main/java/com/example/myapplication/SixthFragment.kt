@@ -108,9 +108,7 @@ class SixthFragment : Fragment() {
 
         requestQueue.add(request)
 
-    binding.buttonExitF6.setOnClickListener{
-        MainActivity().quitApp()
-    }
+
 
 
 

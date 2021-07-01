@@ -67,7 +67,9 @@ class ThirdFragment : Fragment() {
                     //use the porvided VolleyError to display
                     //an error message
                     Log.e("ERROR", it.message!!)
+
                 })
+            binding.textInputplayersF3.text.clear()
             requestQueue.add(postRequest)
 
 
