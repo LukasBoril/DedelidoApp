@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
 import com.example.myapplication.databinding.FragmentFifthBinding
+import java.lang.Thread.sleep
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -93,6 +94,9 @@ class FifthFragment : Fragment() {
                         Log.e("ERROR", it.message!! )
                     })
                 requestQueue.add(request)
+
+                // gives time for the backend
+                sleep(1000)
 
                 // navigate back to next-player fragment
                 view.post {
