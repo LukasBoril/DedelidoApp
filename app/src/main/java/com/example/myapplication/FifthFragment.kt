@@ -134,7 +134,7 @@ class FifthFragment : Fragment() {
         val urlRoot = "com.example.myapplication:drawable/"
         val requestQueue = Volley.newRequestQueue(requireContext())
         val request = StringRequest(
-            Request.Method.GET, "http://10.0.2.2:8080/openCards",
+            Request.Method.PUT, "http://10.0.2.2:8080/openCards",
             { response ->
                 val allOpenCards = ArrayList(Klaxon().parseArray<Card>(response))
                 val addressFirstCard = produceCardAccessString(allOpenCards[0])
