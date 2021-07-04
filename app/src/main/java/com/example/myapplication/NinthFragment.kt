@@ -1,7 +1,5 @@
 package com.example.myapplication
 
-
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
 import com.example.myapplication.databinding.FragmentNinthBinding
-
 
 /**
  * A simple [Fragment] subclass with information and instructions about the Game
@@ -34,24 +31,16 @@ class NinthFragment : Fragment() {
     ): View? {
 
         _binding = FragmentNinthBinding.inflate(inflater, container, false)
-        //getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         binding.buttonExitF9.setOnClickListener {
             findNavController().navigate(R.id.action_ninthFragment_to_FirstFragment)
         }
-
-        // trial 3: again direkt request
-
-
-    }
+            }
 
     override fun onDestroyView() {
         super.onDestroyView()

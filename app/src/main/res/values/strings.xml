@@ -60,10 +60,16 @@
     <!-- Strings used for ninth fragment -->
     <string name="ninth_fragment_label">About Dodelido</string>
     <string name="button_exit_f9">Exit</string>
-    <string name="title_about_f9">Das Ziel von Dodelido</string>
+    <string name="title_about_f9">The goal of Dodelido</string>
     <string name="title_instruction_f9">Playing instructions</string>
     <string name="text_about_f9">Try to survive as many rounds as possible by giving fast and correct answers. If your response is wrong or you hesitated, you lose valuable health points. And the more turns without a mistake the more points you will lose upon a mistake!</string>
-    <string name="text_instruction_f9">Das Spiel beihnahltet 25 verschiedene Karten: 5 tiere in je 5 verschiednene Farben. In der Mitte der Spieler werden drei Ablagestapel gebildet.</string>
+    <string name="text_instruction_f9">The game contains 25 card types: five different animals each in 5 different colours. In every turn, three cards are displayed and the player on the move has to immediately shout out the most occurring trait (colour or animal). If two traits are present to the equal highest number, then "Dodelido" has to be called out. If the player gives a wrong or too late answer (i.e. after the countdown reaches 0), the other players have 5 seconds to press the wrong button (0 to -5 on the timer). When the wrong button is pressed the player who made the mistake will lose valuable health points. The longer no mistake was made the more points he will lose!
+    Simple rules so far, no? One additional twist: as tortoises are slow animals, you have to add a "ehm" before the answer for each visible tortoise (e.g. “ehm ehm blue” if two tortoises are displayed).
+
+    Here are some examples with the correct solution to help you getting started: </string>
+    <string name="solution1_f9">Solution: Penguin!</string>
+    <string name="solution2_f9">Solution: ehm nothing!</string>
+    <string name="solution3_f9">Solution: ehm dodelido!</string>
 
 
 
