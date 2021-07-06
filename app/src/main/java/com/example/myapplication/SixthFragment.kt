@@ -32,9 +32,7 @@ class SixthFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private var currentPlayer: CurrentPlayer? = null
-
-
+   
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,8 +71,7 @@ class SixthFragment : Fragment() {
                         tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
                     //displayCurrentPlayer.text = displayText
                     binding.textViewF6.text = displayText
-                    currentPlayer = tempcurrentPlayer //doe3sn't work!!!
-
+                    
                     //evaluate healthpoints of current player. Is he still alive?
                     //alive: enable buttons continue and exit
                     // dead: transit automatically to fragment 8
