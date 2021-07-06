@@ -25,8 +25,11 @@ import kotlin.collections.set
 
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
- * */
+ * A simple [Fragment] subclass as first step of starting game, register the players.
+ * Added players will be shown in a listview.
+ * author: Kaltrim Bajrami
+ * version: 06.07.2021
+ */
 
 
 class ThirdFragment : Fragment() {
@@ -62,16 +65,14 @@ class ThirdFragment : Fragment() {
         clearPlayerList()
 
 
-        // Set view to portrait
-        getActivity()?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         super.onViewCreated(view, savedInstanceState)
         val requestQueue = Volley.newRequestQueue(requireContext())
 
-        //  val adapter : ArrayAdapter<CurrentPlayer> = ArrayAdapter<CurrentPlayer>(requireContext(), android.R.layout.simple_list_item_1, android.R.id.text1, playerList);
+        //adapter and binding for listview playerlist
         adapter = PlayerAdapter(playerList, requireContext())
         binding.listPlayersF3.adapter = adapter
 
+        //post request on playerlist, name will be set like text content
         binding.buttonAddplayerF3.setOnClickListener {
             val postRequest = StringRequest(
                 Request.Method.POST,
@@ -84,11 +85,13 @@ class ThirdFragment : Fragment() {
                     Log.e("ERROR", it.message!!)
 
                 })
+            //clears text after button click
             binding.textInputplayersF3.text.clear()
+
             requestQueue.add(postRequest)
 
 
-            //define a request.
+            //get request to gest added players and show it in the listview
             val getRequest = StringRequest(
                 Request.Method.GET, "http://10.0.2.2:8080/players/",
                 Response.Listener<String> { response ->
@@ -111,16 +114,10 @@ class ThirdFragment : Fragment() {
                 val getRequest = StringRequest(
                     Request.Method.GET, "http://10.0.2.2:8080/start/",
                     Response.Listener<String> {
-                        // response ->
-
-                        // var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
-                        // playerList.addAll(players!!)
-                        // adapter?.notifyDataSetChanged()
 
                     },
                     Response.ErrorListener {
-                        //use the porvided VolleyError to display
-                        //an error message
+
                         Log.e("ERROR", it.message!!)
                     })
                 requestQueue.add(getRequest)
@@ -149,7 +146,7 @@ class ThirdFragment : Fragment() {
     /**
      * Method to clear playerList
      */
-    fun clearPlayerList() {
+    private fun clearPlayerList() {
         if (playerList.isNotEmpty()) {
             playerList.clear()
         }

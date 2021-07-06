@@ -13,7 +13,10 @@ import kotlin.system.exitProcess
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * A simple [Fragment] subclass for beginning of the app.
+ * The screen is fixed to portrait orientation for this fragment.
+ * author: Kaltrim Bajrami
+ * version: 06.07.2021
  */
 class FirstFragment : Fragment() {
 
