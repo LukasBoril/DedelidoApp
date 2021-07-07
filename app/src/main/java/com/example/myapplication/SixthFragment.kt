@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest
 import com.example.myapplication.databinding.FragmentSixthBinding
 import com.android.volley.toolbox.Volley
 import com.beust.klaxon.Klaxon
+import java.lang.Thread.sleep
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -94,6 +95,9 @@ class SixthFragment : Fragment() {
                                     Log.e("ERROR", it.message!!)
                                 })
                             requestQueue.add(request)
+
+                            sleep(1000)
+
                             findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
                         }
                         buttonExit.setOnClickListener {
