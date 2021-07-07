@@ -96,7 +96,7 @@ class SixthFragment : Fragment() {
                                 })
                             requestQueue.add(request)
 
-                            sleep(1000)
+                            sleep(200)
 
                             findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
                         }

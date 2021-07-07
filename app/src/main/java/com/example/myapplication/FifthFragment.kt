@@ -96,7 +96,7 @@ class FifthFragment : Fragment() {
                 requestQueue.add(request)
 
                 // gives time for the backend
-                sleep(1000)
+                sleep(200)
 
                 // navigate back to next-player fragment
                 view.post {
