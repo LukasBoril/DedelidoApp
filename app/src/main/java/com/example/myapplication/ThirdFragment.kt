@@ -35,6 +35,7 @@ import kotlin.collections.set
 class ThirdFragment : Fragment() {
 
     private var _binding: FragmentThirdBinding? = null
+    private var playerControler = BackendPlayerControler()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -74,7 +75,10 @@ class ThirdFragment : Fragment() {
 
         //post request on playerlist, name will be set like text content
         binding.buttonAddplayerF3.setOnClickListener {
-            val postRequest = StringRequest(
+            val newPlayername = binding.textInputplayersF3.text.toString()
+            playerControler.addNewPlayer(newPlayername)
+
+/*            val postRequest = StringRequest(
                 Request.Method.POST,
                 "http://10.0.2.2:8080/players/" + binding.textInputplayersF3.text.toString(),
                 Response.Listener<String> {
@@ -84,15 +88,24 @@ class ThirdFragment : Fragment() {
                     //an error message
                     Log.e("ERROR", it.message!!)
 
-                })
+                })*/
             //clears text after button click
             binding.textInputplayersF3.text.clear()
 
-            requestQueue.add(postRequest)
+            // requestQueue.add(postRequest)
 
+
+            var players = playerControler.allPlayers
+            var newList : ArrayList<CurrentPlayer> = ArrayList()
+            for (p in players) {
+                var newP : CurrentPlayer = CurrentPlayer(p.name, p.id, p.healthPoints, p.yourTurn)
+                newList.add(newP)
+            }
+            playerList.addAll(newList)
+            adapter?.notifyDataSetChanged()
 
             //get request to gest added players and show it in the listview
-            val getRequest = StringRequest(
+          /*  val getRequest = StringRequest(
                 Request.Method.GET, "http://10.0.2.2:8080/players/",
                 Response.Listener<String> { response ->
                     var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
@@ -105,7 +118,7 @@ class ThirdFragment : Fragment() {
                     //an error message
                     Log.e("ERROR", it.message!!)
                 })
-            requestQueue.add(getRequest)
+            requestQueue.add(getRequest)*/
         }
 
         binding.buttonStartgameF3.setOnClickListener {
