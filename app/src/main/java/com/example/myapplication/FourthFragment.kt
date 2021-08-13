@@ -18,7 +18,7 @@ import com.example.myapplication.databinding.FragmentFourthBinding
 
 /**
  * Fourth fragment class
- * This fragment is the "get ready" view, where the players are informed, who is up next
+ * This fragment is the "get ready" view, where the players are Ninformed, who is up next
  * The leftover time until the next turn starts is displayed in real-time
  *
  * @author Lukas Boril
@@ -27,6 +27,7 @@ import com.example.myapplication.databinding.FragmentFourthBinding
 class FourthFragment : Fragment() {
 
     private var _binding: FragmentFourthBinding? = null
+    private var playerControler = BackendPlayerControler()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
