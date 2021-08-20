@@ -29,6 +29,7 @@ import kotlin.concurrent.schedule
 class SixthFragment : Fragment() {
 
     private var _binding: FragmentSixthBinding? = null
+    private var backendPlayerController = BackendPlayerController()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -55,6 +56,9 @@ class SixthFragment : Fragment() {
 
         buttonExit.setEnabled(false)
         buttonContinue.setEnabled(false)
+
+        binding.textViewF6.text = backendPlayerController.currentPlayer.name + " made a mistake.."
+
 
         // Request current player from the background and display his name.
         // The current Player conducted the mistake.

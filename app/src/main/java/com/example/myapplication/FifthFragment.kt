@@ -32,6 +32,11 @@ import kotlin.collections.ArrayList
 class FifthFragment : Fragment() {
 
     private var _binding: FragmentFifthBinding? = null
+    private var backendRoundCounterController = BackendRoundCounterController()
+    private var backendPlayerController =
+        BackendPlayerController()
+    private var backendCardController = BackendCardController()
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -71,29 +76,8 @@ class FifthFragment : Fragment() {
             // once it's done, inform the backend that no mistake was made and that it's the next players turn
             override fun onFinish() {
                 timePassed= 0
-                val requestQueue = Volley.newRequestQueue(requireContext())
-
-                var request = StringRequest(
-                    Request.Method.PUT, "http://10.0.2.2:8080/roundCounter",
-                    {
-                    },
-                    {
-                        //use the provided VolleyError to display
-                        //an error message
-                        Log.e("ERROR", it.message!! )
-                    })
-                requestQueue.add(request)
-
-                request = StringRequest(
-                    Request.Method.GET, "http://10.0.2.2:8080/next",
-                    {
-                    },
-                    {
-                        //use the provided VolleyError to display
-                        //an error message
-                        Log.e("ERROR", it.message!! )
-                    })
-                requestQueue.add(request)
+                backendRoundCounterController.increaseCounter()
+                backendPlayerController.next()
 
                 // gives time for the backend
                 sleep(200)
@@ -110,17 +94,8 @@ class FifthFragment : Fragment() {
         // Binding of the button and setting it up. If it gets pushed the current player is punished and it is navigated to fragment6
         binding.f5Button.setOnClickListener {
             // REQUEST: tell backend to punish current player
-            val requestQueue = Volley.newRequestQueue(requireContext())
-            val request = StringRequest(
-                Request.Method.GET, "http://10.0.2.2:8080/fail",
-                {
-                },
-                {
-                    //use the provided VolleyError to display
-                    //an error message
-                    Log.e("ERROR", it.message!! )
-                })
-            requestQueue.add(request)
+
+            backendPlayerController.punishPlayer()
             timer.cancel()
             view.post {
                 findNavController().navigate(R.id.action_fifthFragment_to_sixthFragment)
@@ -136,29 +111,18 @@ class FifthFragment : Fragment() {
 
         // getting new cards and displaying them in ImageView 0 to 2
         val urlRoot = "com.example.myapplication:drawable/"
-        val requestQueue = Volley.newRequestQueue(requireContext())
-        val request = StringRequest(
-            Request.Method.PUT, "http://10.0.2.2:8080/openCards",
-            { response ->
-                val allOpenCards = ArrayList(Klaxon().parseArray<Card>(response))
-                val addressFirstCard = produceCardAccessString(allOpenCards[0])
-                var id = resources.getIdentifier(urlRoot + addressFirstCard, null, null)
-                viewCard1.setImageResource(id)
 
-                val addressSecondCard = produceCardAccessString(allOpenCards[1])
-                id = resources.getIdentifier(urlRoot + addressSecondCard, null, null)
-                viewCard2.setImageResource(id)
+        var allOpenCards = backendCardController.openCards
+        val addressFirstCard = produceCardAccessString(allOpenCards[0])
+        var id = resources.getIdentifier(urlRoot + addressFirstCard, null, null)
+        viewCard1.setImageResource(id)
+        val addressSecondCard = produceCardAccessString(allOpenCards[1])
+        id = resources.getIdentifier(urlRoot + addressSecondCard, null, null)
+        viewCard2.setImageResource(id)
 
-                val addressThirdCard = produceCardAccessString(allOpenCards[2])
-                id = resources.getIdentifier(urlRoot + addressThirdCard, null, null)
-                viewCard3.setImageResource(id)
-            },
-            {
-                //use the provided VolleyError to display
-                //an error message
-                Log.e("ERROR", it.message!! )
-            })
-        requestQueue.add(request)
+        val addressThirdCard = produceCardAccessString(allOpenCards[2])
+        id = resources.getIdentifier(urlRoot + addressThirdCard, null, null)
+        viewCard3.setImageResource(id)
     }
 
     override fun onDestroyView() {

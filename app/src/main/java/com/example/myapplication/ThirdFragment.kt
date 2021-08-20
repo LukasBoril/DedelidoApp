@@ -1,27 +1,14 @@
 package com.example.myapplication
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.beust.klaxon.Klaxon
 import com.example.myapplication.databinding.FragmentThirdBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlin.collections.HashMap
-import kotlin.collections.Map
-import kotlin.collections.MutableMap
-import kotlin.collections.set
 
 
 /**
@@ -35,7 +22,8 @@ import kotlin.collections.set
 class ThirdFragment : Fragment() {
 
     private var _binding: FragmentThirdBinding? = null
-    private var playerControler = BackendPlayerControler()
+    private var playerControler =
+        BackendPlayerController()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -94,7 +82,6 @@ class ThirdFragment : Fragment() {
 
             // requestQueue.add(postRequest)
 
-
             var players = playerControler.allPlayers
             var newList : ArrayList<CurrentPlayer> = ArrayList()
             for (p in players) {
@@ -124,7 +111,9 @@ class ThirdFragment : Fragment() {
         binding.buttonStartgameF3.setOnClickListener {
             //first checks if player is registered, then game will starts
             if (playerList.isNotEmpty()) {
-                val getRequest = StringRequest(
+                playerControler.startTheGame()
+
+                /*val getRequest = StringRequest(
                     Request.Method.GET, "http://10.0.2.2:8080/start/",
                     Response.Listener<String> {
 
@@ -133,7 +122,7 @@ class ThirdFragment : Fragment() {
 
                         Log.e("ERROR", it.message!!)
                     })
-                requestQueue.add(getRequest)
+                requestQueue.add(getRequest)*/
                 view?.post {
                     findNavController().navigate(R.id.action_ThirdFragment_to_secondFragment)
                 }
@@ -144,8 +133,6 @@ class ThirdFragment : Fragment() {
                     "No player registered. Please register player first!",
                     Snackbar.LENGTH_LONG
                 ).setAction("Action", null).show()
-
-
             }
 
         }

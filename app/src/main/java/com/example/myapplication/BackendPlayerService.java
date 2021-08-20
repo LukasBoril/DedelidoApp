@@ -6,6 +6,7 @@ public class BackendPlayerService {
 
     static ArrayList<BackendPlayer> playerList = new ArrayList<>();
 
+
     public void addNewPlayer(String name) {
         BackendPlayer newPlayer = new BackendPlayer(name);
         playerList.add(newPlayer);
@@ -33,5 +34,9 @@ public class BackendPlayerService {
 
     public BackendPlayer getCurrentPlayer() {
         return playerList.stream().filter(player -> player.getYourTurn()==true).findFirst().orElse(null);
+    }
+
+    public void punishPlayer(){
+
     }
 }

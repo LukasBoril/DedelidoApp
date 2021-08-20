@@ -3,17 +3,12 @@ package com.example.myapplication
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.beust.klaxon.Klaxon
 import com.example.myapplication.databinding.FragmentFourthBinding
 
 /**
@@ -27,7 +22,8 @@ import com.example.myapplication.databinding.FragmentFourthBinding
 class FourthFragment : Fragment() {
 
     private var _binding: FragmentFourthBinding? = null
-    private var playerControler = BackendPlayerControler()
+    private var playerControler =
+        BackendPlayerController()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -68,26 +64,13 @@ class FourthFragment : Fragment() {
             binding.f4TextView2.text = newVal
         })
 
-        // REQUEST: ask backend who's turn it is and update the CurrentPlayerViewModel accordingly
-        val requestQueue = Volley.newRequestQueue(requireContext())
-        val request2 = StringRequest(
-            Request.Method.GET, "http://10.0.2.2:8080/whosturn",
-            { response ->
-                val nextPlayer = Klaxon().parse<CurrentPlayer>(response)
-                model.name.value = nextPlayer?.getPlayerName()
-            },
-            {
-                //use the provided VolleyError to display
-                //an error message
-                Log.e("ERROR", it.message!! )
-            })
-        requestQueue.add(request2)
+        model.name.value = playerControler.currentPlayer.name
 
         // Setting up a timer that counts down from 10
         var timePassed= 0
         val timer = object: CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-            modelTime.leftOverTime.value = (10-timePassed)
+            modelTime.leftOverTime.value = (5-timePassed)
                 timePassed++
             }
 

@@ -2,9 +2,10 @@ package com.example.myapplication;
 
 import java.util.ArrayList;
 
-public class BackendPlayerControler {
+public class BackendPlayerController {
 
     static BackendPlayerService playerService = new BackendPlayerService();
+    static BackendRoundCounterService roundCounterService = new BackendRoundCounterService();
 
     public void addNewPlayer(String name) {
         playerService.addNewPlayer(name);
@@ -22,5 +23,11 @@ public class BackendPlayerControler {
 
     public BackendPlayer getCurrentPlayer() {
         return playerService.getCurrentPlayer();
+    }
+
+    public void punishPlayer(){
+        int currentNrRounds = roundCounterService.getCounterValue();
+        getCurrentPlayer().setHealthPoints(getCurrentPlayer().getHealthPoints()-currentNrRounds);
+        roundCounterService.resetBackendRoundCounterCounter();
     }
 }
