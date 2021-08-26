@@ -29,6 +29,7 @@ import com.example.myapplication.databinding.FragmentSeventhBinding
 class SeventhFragment : Fragment() {
 
     private var _binding: FragmentSeventhBinding? = null
+    var backendPlayerController = BackendPlayerController()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -55,26 +56,56 @@ class SeventhFragment : Fragment() {
          */
         //val winnerBind = binding.textWinnerF7
 
-        val requestQueue = Volley.newRequestQueue(requireContext())
-        requestQueue.add(getAllPlayers())
-
         adapter = F7PlayerScoreAdapter(allPlayers, requireContext())
         binding.listViewF7.adapter = adapter
+
+
+        var backendPlayerList = backendPlayerController.allPlayers
+        for (p in backendPlayerList) {
+            var newP : CurrentPlayer = CurrentPlayer(p.name, p.id, p.healthPoints, p.yourTurn)
+            allPlayers.add(newP)
+        }
+
+        // allPlayers.addAll(players!!)
+        adapter?.notifyDataSetChanged()
+
+        var tempHP = 0
+        var winner: CurrentPlayer? = null
+        for (player in allPlayers) {
+            if (player.getPlayerHealthPoints() > tempHP) {
+                winner = player
+                tempHP = player.getPlayerHealthPoints()
+            }
+        }
+
+        if (winner != null) {
+            var displayTextWinner =
+                winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
+            //binding.textWinnerF7.text = displayTextWinner
+            binding.textWinnerF7.text = displayTextWinner
+        }
+
+//        val requestQueue = Volley.newRequestQueue(requireContext())
+//        requestQueue.add(getAllPlayers())
+
+
 
         binding.buttonExitF7.setOnClickListener {
             //request to the backend ro reset the counter to 1 and the players to null/delete
             //to be ready for a new game
-            val url = "http://10.0.2.2:8080/clear/"
-            val request = StringRequest(
-                Request.Method.GET, url,
-                Response.Listener<String> {},
 
-                Response.ErrorListener {
-                    //use the porvided VolleyError to display
-                    //an error message
-                    Log.e("ERROR", it.message!!)
-                })
-            requestQueue.add(request)
+            backendPlayerController.clearPlayerList()
+//            val url = "http://10.0.2.2:8080/clear/"
+//            val request = StringRequest(
+//                Request.Method.GET, url,
+//                Response.Listener<String> {},
+//
+//                Response.ErrorListener {
+//                    //use the porvided VolleyError to display
+//                    //an error message
+//                    Log.e("ERROR", it.message!!)
+//                })
+//            requestQueue.add(request)
             findNavController().navigate(com.example.myapplication.R.id.action_seventhFragment_to_FirstFragment)
         }
     }
@@ -90,47 +121,47 @@ class SeventhFragment : Fragment() {
     * all other players' name and score is displayed as a listView.
     * return: a Volley StringRequest
      */
-    fun getAllPlayers(): StringRequest {
-        //var players : MutableList<CurrentPlayer>? = null
-        //  var dead = false
-        //  var deadPlayer : CurrentPlayer? = null
-        val url = "http://10.0.2.2:8080/players/"
-
-
-        //define a request.
-
-        val request = StringRequest(
-            Request.Method.GET, url,
-            Response.Listener<String> { response ->
-                var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
-                allPlayers.addAll(players!!)
-                adapter?.notifyDataSetChanged()
-
-                // evaluate the winner. If players have an identical score, the first player
-                // encountered will be displayed.
-                var tempHP = 0
-                var winner: CurrentPlayer? = null
-                for (player in players) {
-                    if (player.getPlayerHealthPoints() > tempHP) {
-                        winner = player
-                        tempHP = player.getPlayerHealthPoints()
-                    }
-                }
-
-                if (winner != null) {
-                    var displayTextWinner =
-                        winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
-                    //binding.textWinnerF7.text = displayTextWinner
-                    binding.textWinnerF7.text = displayTextWinner
-                }
-            },
-
-            Response.ErrorListener {
-                //use the porvided VolleyError to display
-                //an error message
-                Log.e("ERROR", it.message!!)
-            })
-
-        return request
-    }
+//    fun getAllPlayers(): StringRequest {
+//        //var players : MutableList<CurrentPlayer>? = null
+//        //  var dead = false
+//        //  var deadPlayer : CurrentPlayer? = null
+//        val url = "http://10.0.2.2:8080/players/"
+//
+//
+//        //define a request.
+//
+//        val request = StringRequest(
+//            Request.Method.GET, url,
+//            Response.Listener<String> { response ->
+//                var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
+//                allPlayers.addAll(players!!)
+//                adapter?.notifyDataSetChanged()
+//
+//                // evaluate the winner. If players have an identical score, the first player
+//                // encountered will be displayed.
+//                var tempHP = 0
+//                var winner: CurrentPlayer? = null
+//                for (player in players) {
+//                    if (player.getPlayerHealthPoints() > tempHP) {
+//                        winner = player
+//                        tempHP = player.getPlayerHealthPoints()
+//                    }
+//                }
+//
+//                if (winner != null) {
+//                    var displayTextWinner =
+//                        winner.getPlayerName() + " won with " + winner.getPlayerHealthPoints() + " HP left. Congrats!"
+//                    //binding.textWinnerF7.text = displayTextWinner
+//                    binding.textWinnerF7.text = displayTextWinner
+//                }
+//            },
+//
+//            Response.ErrorListener {
+//                //use the porvided VolleyError to display
+//                //an error message
+//                Log.e("ERROR", it.message!!)
+//            })
+//
+//        return request
+//    }
 }

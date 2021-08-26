@@ -68,7 +68,7 @@ class FourthFragment : Fragment() {
 
         // Setting up a timer that counts down from 10
         var timePassed= 0
-        val timer = object: CountDownTimer(10000, 1000) {
+        val timer = object: CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
             modelTime.leftOverTime.value = (5-timePassed)
                 timePassed++

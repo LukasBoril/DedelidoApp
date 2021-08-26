@@ -36,7 +36,8 @@ public class BackendPlayerService {
         return playerList.stream().filter(player -> player.getYourTurn()==true).findFirst().orElse(null);
     }
 
-    public void punishPlayer(){
-
+    public void clearPlayerList(){
+        playerList.clear();
     }
+
 }

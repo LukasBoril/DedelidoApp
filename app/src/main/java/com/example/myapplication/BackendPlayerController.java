@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class BackendPlayerController {
@@ -25,9 +26,16 @@ public class BackendPlayerController {
         return playerService.getCurrentPlayer();
     }
 
+
+    // migrate this method to service layer
     public void punishPlayer(){
         int currentNrRounds = roundCounterService.getCounterValue();
-        getCurrentPlayer().setHealthPoints(getCurrentPlayer().getHealthPoints()-currentNrRounds);
+        int newHealtPoints = getCurrentPlayer().getHealthPoints() - currentNrRounds;
+        getCurrentPlayer().setHealthPoints(newHealtPoints);
         roundCounterService.resetBackendRoundCounterCounter();
+    }
+
+    public void clearPlayerList() {
+        playerService.clearPlayerList();
     }
 }

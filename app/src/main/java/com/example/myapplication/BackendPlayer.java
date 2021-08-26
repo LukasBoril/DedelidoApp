@@ -11,7 +11,7 @@ public class BackendPlayer {
     public BackendPlayer(String name) {
         setName(name);
         setId(++idCounter);
-        setHealthPoints(30);
+        setHealthPoints(3);
         setYourTurn(false);
     }
 
