@@ -66,17 +66,6 @@ class ThirdFragment : Fragment() {
             val newPlayername = binding.textInputplayersF3.text.toString()
             playerControler.addNewPlayer(newPlayername)
 
-/*            val postRequest = StringRequest(
-                Request.Method.POST,
-                "http://10.0.2.2:8080/players/" + binding.textInputplayersF3.text.toString(),
-                Response.Listener<String> {
-                },
-                Response.ErrorListener {
-                    //use the porvided VolleyError to display
-                    //an error message
-                    Log.e("ERROR", it.message!!)
-
-                })*/
             //clears text after button click
             binding.textInputplayersF3.text.clear()
 
@@ -90,39 +79,12 @@ class ThirdFragment : Fragment() {
             }
             playerList.addAll(newList)
             adapter?.notifyDataSetChanged()
-
-            //get request to gest added players and show it in the listview
-          /*  val getRequest = StringRequest(
-                Request.Method.GET, "http://10.0.2.2:8080/players/",
-                Response.Listener<String> { response ->
-                    var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
-                    playerList.addAll(players!!)
-                    adapter?.notifyDataSetChanged()
-
-                },
-                Response.ErrorListener {
-                    //use the porvided VolleyError to display
-                    //an error message
-                    Log.e("ERROR", it.message!!)
-                })
-            requestQueue.add(getRequest)*/
         }
 
         binding.buttonStartgameF3.setOnClickListener {
             //first checks if player is registered, then game will starts
             if (playerList.isNotEmpty()) {
                 playerControler.startTheGame()
-
-                /*val getRequest = StringRequest(
-                    Request.Method.GET, "http://10.0.2.2:8080/start/",
-                    Response.Listener<String> {
-
-                    },
-                    Response.ErrorListener {
-
-                        Log.e("ERROR", it.message!!)
-                    })
-                requestQueue.add(getRequest)*/
                 view?.post {
                     findNavController().navigate(R.id.action_ThirdFragment_to_secondFragment)
                 }

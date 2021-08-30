@@ -57,8 +57,8 @@ class SixthFragment : Fragment() {
         buttonExit.setEnabled(false)
         buttonContinue.setEnabled(false)
 
-        binding.textViewF6.text = backendPlayerController.currentPlayer.name + " made a mistake.."
-        println(" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! current player healt: " + backendPlayerController.currentPlayer.healthPoints)
+        var displaytext = backendPlayerController.currentPlayer.name + " made a mistake.."
+        binding.textViewF6.text = displaytext
         var newHealthpoint = backendPlayerController.currentPlayer.healthPoints
         if (newHealthpoint<1) {
             Timer().schedule(2000) {
@@ -76,66 +76,6 @@ class SixthFragment : Fragment() {
         buttonExit.setOnClickListener {
             view?.post { findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment) }
         }
-
-
-//        // Request current player from the background and display his name.
-//        // The current Player conducted the mistake.
-//        val requestQueue = Volley.newRequestQueue(requireContext())
-//        val url = "http://10.0.2.2:8080/whosturn/"
-//
-//        val request = StringRequest(
-//            Request.Method.GET, url,
-//            Response.Listener<String> { response ->
-//                val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
-//
-//                if (tempcurrentPlayer != null) {
-//                    //display name of current player
-//                    val displayText =
-//                        tempcurrentPlayer.getPlayerName().toString() + " made a mistake.."
-//                    //displayCurrentPlayer.text = displayText
-//                    binding.textViewF6.text = displayText
-//
-//                    //evaluate healthpoints of current player. Is he still alive?
-//                    //alive: enable buttons continue and exit
-//                    // dead: transit automatically to fragment 8
-//                    val hp = tempcurrentPlayer.getPlayerHealthPoints()
-//                    if (hp < 1) {
-//                        Timer().schedule(2000) {
-//                            view?.post { findNavController().navigate(R.id.action_sixthFragment_to_eighthFragment) }
-//                        }
-//                    } else {
-//                        buttonExit.setEnabled(true)
-//                        buttonContinue.setEnabled(true)
-//                        buttonContinue.setOnClickListener {
-//                            val request = StringRequest(
-//                                Request.Method.GET, "http://10.0.2.2:8080/next",
-//                                Response.Listener<String> {
-//                                },
-//                                Response.ErrorListener {
-//                                    //use the porvided VolleyError to display
-//                                    //an error message
-//                                    Log.e("ERROR", it.message!!)
-//                                })
-//                            requestQueue.add(request)
-//
-//                            sleep(200)
-//
-//                            findNavController().navigate(R.id.action_sixthFragment_to_fourthFragment)
-//                        }
-//                        buttonExit.setOnClickListener {
-//                            view?.post { findNavController().navigate(R.id.action_sixthFragment_to_seventhFragment) }
-//                        }
-//                    }
-//                }
-//            },
-//            Response.ErrorListener {
-//                //use the porvided VolleyError to display
-//                //an error message
-//                Log.e("ERROR", it.message!!)
-//                print("request \"whosturn\" to the backend failed.")
-//            })
-
-//        requestQueue.add(request)
     }
 
     override fun onDestroyView() {

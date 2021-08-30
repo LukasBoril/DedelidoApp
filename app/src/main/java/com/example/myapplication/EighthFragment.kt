@@ -52,8 +52,6 @@ class EighthFragment : Fragment() {
         Get a list of all current players from the backend, including their name and healthpoints.
         The name and the healthpoints are then bound to the Listview
          */
-//        val requestQueue = Volley.newRequestQueue(requireContext())
-//        requestQueue.add(getAllPlayers())
 
         var backendPlayers : List<BackendPlayer> = playerController.allPlayers
         for (p in backendPlayers) {
@@ -78,17 +76,6 @@ class EighthFragment : Fragment() {
             //request to the backend ro reset the counter to 1 and the players to null/delete
             //to be ready for a new game
             playerController.clearPlayerList()
-//            val url = "http://10.0.2.2:8080/clear/"
-//            val resetRequest = StringRequest(
-//                Request.Method.GET, url,
-//                Response.Listener<String> {},
-//
-//                Response.ErrorListener {
-//                    //use the porvided VolleyError to display
-//                    //an error message
-//                    Log.e("ERROR", it.message!!)
-//                })
-//            requestQueue.add(resetRequest)
             findNavController().navigate(R.id.action_eighthFragment_to_FirstFragment)
         }
 
@@ -96,66 +83,12 @@ class EighthFragment : Fragment() {
 
         val displayText =  playerController.currentPlayer.name + " just died!"
         binding.textDeadF8.text = displayText
-
-//        val url = "http://10.0.2.2:8080/whosturn/"
-//
-//        val playerRequest = StringRequest(
-//            Request.Method.GET, url,
-//            Response.Listener<String> { response ->
-//                val tempcurrentPlayer = Klaxon().parse<CurrentPlayer>(response)
-//                if (tempcurrentPlayer != null)
-//                {
-//                    val displayText = tempcurrentPlayer.getPlayerName() + " just died!"
-//                    binding.textDeadF8.text = displayText
-//                }
-//            },
-//
-//            Response.ErrorListener {
-//                //use the porvided VolleyError to display
-//                //an error message
-//                Log.e("ERROR", it.message!!)
-//            })
-//        requestQueue.add(playerRequest)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
-//    fun getAllPlayers() : StringRequest {
-//
-//        val url = "http://10.0.2.2:8080/players/"
-//
-//        //define a request.
-//        val request = StringRequest(
-//            Request.Method.GET, url,
-//            Response.Listener<String> { response ->
-//               var players = ArrayList(Klaxon().parseArray<CurrentPlayer>(response))
-//
-//                allPlayers.addAll(players!!)
-//                adapter?.notifyDataSetChanged()
-//
-//                var tempHP = 0
-//                var winner : CurrentPlayer? = null
-//                for (player in players) {
-//                    if (player.getPlayerHealthPoints() > tempHP) {
-//                        winner = player
-//                        tempHP = player.getPlayerHealthPoints()
-//                    }
-//                }
-//                binding.textWinnerF8.text = winner?.getPlayerName() + " won! congrats"
-//                                      },
-//
-//            Response.ErrorListener {
-//                //use the porvided VolleyError to display
-//                //an error message
-//                Log.e("ERROR", it.message!!)
-//            })
-//
-//        return request
-//    }
 }
 
 
